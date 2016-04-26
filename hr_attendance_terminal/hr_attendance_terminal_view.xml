@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="hr_employee_view_form_at01" model="ir.ui.view">
+            <field name="name">hr.employee.view.form_at01</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                
+		<field name="parent_id" position="after">
+			<field name="rfid_key"/>
+                </field>
+            </field>
+        </record>
+
+
+
+        <record id="hr_attendance_terminal_view_form" model="ir.ui.view">
+            <field name="name">hr.attendance.terminal.view.form</field>
+            <field name="model">hr.attendance.terminal</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Terminal">
+			<separator string="Terminal Setup" colspan="4" col="4"/>
+			<group colspan="2" col="4">
+				<field name="tnr" colspan="1"/>
+				<field name="location" colspan="1"/>
+				<field name="ip" colspan="1"/>
+				<field name="license_nr" colspan="1"/>
+
+				<group colspan="2" col="4">
+					<separator string="Terminal switches to Sign-In at:" colspan="4" col="4"/>
+					<field name="sign_in_hour" colspan="1"/>
+					<field name="sign_in_minute" colspan="1"/>
+				</group>
+				<group colspan="2" col="4">
+					<separator string="Terminal switches to Sign-Out at:" colspan="4" col="4"/>
+					<field name="sign_out_hour" colspan="1"/>
+					<field name="sign_out_minute" colspan="1"/>
+				</group> 				
+
+			</group>
+			<separator colspan="4" string="Functions"/>
+			<button name="fetch_attendance_records" string="Fetch" type="object" icon="gtk-go-forward" context="{}"/>
+			<button name="create_terminal_users" string="Create Terminal Users" type="object" icon="gtk-go-forward" context="{}"/>
+			<button name="set_terminal_time" string="Set Terminal Time" type="object" icon="gtk-go-forward" context="{}"/>
+			<button name="set_signinout_times" string="Set Auto Sign In/Out Time" type="object" icon="gtk-go-forward" context="{}"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_attendance_terminal_view_tree" model="ir.ui.view">
+            <field name="name">hr.attendance.terminal.view.tree</field>
+            <field name="model">hr.attendance.terminal</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Terminals">
+                    <field name="tnr"/>
+                    <field name="location"/>
+                    <field name="ip"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_attendance_terminal" model="ir.actions.act_window">
+            <field name="name">Terminals</field>
+            <field name="res_model">hr.attendance.terminal</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+
+       <!--     <field name="search_view_id" ref=""/> -->
+        </record>
+
+        
+        <menuitem action="action_hr_attendance_terminal" id="hr_menu_hr_attendance_terminal" parent="hr.menu_hr_configuration" sequence="10" groups="base.group_hr_manager" />
+
+
+    </data>
+</openerp>

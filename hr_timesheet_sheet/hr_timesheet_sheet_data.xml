@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <!-- notify all employees of module installation -->
+        <record model="mail.message" id="hr_timesheet_module_install_notification">
+            <field name="model">mail.group</field>
+            <field name="res_id" ref="mail.group_all_employees"/>
+            <field name="type">notification</field>
+            <field name="subtype_id" ref="mail.mt_comment"/>
+            <field name="subject">Timesheet Validation application installed!</field>
+            <field name="body"><![CDATA[<p>From the top menu "Human Resources", enter and validate timesheets and attendances.</p>]]></field>
+        </record>
+
+        <record id="ir_actions_server_timsheet_sheet" model="ir.actions.server">
+            <field name="sequence" eval="5"/>
+            <field name="state">code</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_hr_timesheet_current_open"/>
+            <field name="code">action = pool.get('hr.timesheet.current.open').open_timesheet(cr, uid, None, context)</field>
+            <field name="condition">True</field>
+            <field name="name">My Timesheet</field>
+        </record>
+
+        <menuitem name="My Current Timesheet" id="menu_act_hr_timesheet_sheet_form_my_current" parent="hr_attendance.menu_hr_time_tracking" action="ir_actions_server_timsheet_sheet" sequence="1"/>
+
+    </data>
+
+    <data noupdate="0">
+        <record forcecreate="True" id="ir_cron_scheduler_timesheet_activities_date" model="ir.cron">
+           <field name="name">Fetch Date in Timesheet Activities</field>
+           <field eval="True" name="active" />
+           <field name="user_id" ref="base.user_root" />
+           <field name="interval_number">1</field>
+           <field name="interval_type">hours</field>
+           <field name="numbercall">-1</field>
+           <field eval="'hr.analytic.timesheet'" name="model" />
+           <field eval="'fetch_date_for_timesheet'" name="function" />
+           <field eval="'()'" name="args" />
+           <field name="active" eval="False"/>
+        </record>
+
+        <record model="ir.config_parameter" id="hr_timesheet_exception_config_from">
+            <field name="key">hr.analytic.timesheet.email_from</field>
+            <field name="value">hytechproerp@gmail.com</field>
+        </record>
+
+        <record model="ir.config_parameter" id="hr_timesheet_exception_config_to">
+            <field name="key">hr.analytic.timesheet.email_to</field>
+            <field name="value">exceptionreport@hytechpro.com</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_hr_attendance_monthly_summary" model="ir.ui.view">
+            <field name="name">hr_attendance.monthly.summary.wizards.form</field>
+            <field name="model">hr_attendance.monthly.summary.wizards</field>
+            <field name="arch" type="xml">
+                <form string="Monthly Attendance Summary">
+                    <group col="4" colspan="6">
+                        <field name="monthly_status" attrs="{'invisible':[('filter_by_date', '=', True)], 'required':[('filter_by_date', '!=', True)]}"/>
+                        <newline/>
+                        <field name="filter_by_date"/>
+                        <group colspan="4" attrs="{'invisible':[('filter_by_date', '!=', True)]}">
+                            <field name="date_from" attrs="{'required':[('filter_by_date', '=', True)]}"/>
+                            <field name="date_to" attrs="{'required':[('filter_by_date', '=', True)]}" on_change="onchange_date_to(date_from,date_to)"/>
+                        </group>
+                        <newline/>
+                        <field name="emp_id" invisible="True"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hr_attendance_monthly_summary" model="ir.actions.act_window">
+            <field name="name">Monthly Attendance Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr_attendance.monthly.summary.wizards</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="hr_attendance_monthly_summary_value">
+            <field name="model_id" ref="hr.model_hr_employee" />
+            <field name="name">Monthly Attendance Summary</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_hr_attendance_monthly_summary'))" />
+            <field name="key">action</field>
+            <field name="model">hr.employee</field>
+        </record>
+
+    </data>
+</openerp>

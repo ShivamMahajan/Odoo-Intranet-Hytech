@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+  	<record id="hr_leave_mechanism_comp_rule" model="ir.rule">
+        <field name="name">Leave Mechanism multi company rule</field>
+        <field name="model_id" ref="model_leave_mechanism"/>
+        <field eval="True" name="global"/>
+        <field name="domain_force">['|',('company_ids','=',False),('company_ids','child_of',[user.company_id.id])]</field>
+    </record>
+
+  </data>
+</openerp>

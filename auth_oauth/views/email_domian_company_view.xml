@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- explicit list view definition -->
+    
+
+
+      <record model="ir.ui.view" id="edit_res_company_email_form">
+      <field name="name">User Email Form View</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
+      <field name="arch" type="xml">
+        <page string="Report Configuration" position="after">
+          <page string="Users">
+            <field name="employee_access">
+              <tree editable="bottom">
+                <field name="user_name"/>
+                <field name="email_login"/>
+              </tree>
+            </field>
+          </page>
+                 
+</page>
+</field>
+</record>
+</data>
+</openerp>

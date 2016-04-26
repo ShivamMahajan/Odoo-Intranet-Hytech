@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+    <record id="property_rule_holidays_employee" model="ir.rule">
+        <field name="name">Employee Holidays</field>
+        <field name="model_id" ref="model_hr_holidays"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_holidays_employee_write" model="ir.rule">
+        <field name="name">Employee Holidays Create, Write, Unlink</field>
+        <field name="model_id" ref="model_hr_holidays"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id), ('state', 'in', ['draft', 'confirm', 'cancel','validate1','validate'])]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="property_rule_project_manager" model="ir.rule">
+        <field name="name">Holidays Project Manager</field>
+        <field name="model_id" ref="model_hr_holidays"/>
+        <field name="domain_force">[('employee_id', 'child_of', [user.employee_ids[0].id])]</field>
+        <field name="groups" eval="[(4,ref('base.group_hr_project_manager'))]"/>
+    </record>
+
+    <record id="property_rule_holidays_officer" model="ir.rule">
+        <field name="name">Holidays Officer</field>
+        <field name="model_id" ref="model_hr_holidays"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('base.group_hr_user'))]"/>
+    </record>
+
+    <record id="property_rule_holidays_account_maanger" model="ir.rule">
+        <field name="name">Account Manager</field>
+        <field name="model_id" ref="model_hr_holidays"/>
+        <field name="domain_force">[(1,'=',1),('type','=','add')]</field>
+        <field name="groups" eval="[(4,ref('account.group_account_manager'))]"/>
+    </record>
+
+    <record id="resource_leaves_officer" model="ir.rule">
+        <field name="name">Leaves Officer</field>
+        <field name="model_id" ref="model_resource_calendar_leaves"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('base.group_hr_user'))]"/>
+    </record>
+
+  </data>
+  <data noupdate="0">
+
+         <record id="hr_employee_leave_request_multi_comp_rule" model="ir.rule">
+            <field name="name">Employee Leave request multi company rule</field>
+            <field name="model_id" ref="model_hr_holidays"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('user_id.company_id','=',False),('user_id.company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+ <record id="hr_employee_leave_type_multi_comp_rule" model="ir.rule">
+            <field name="name">Employee Leave Types multi company rule</field>
+            <field name="model_id" ref="model_hr_holidays_status"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">[('company_ids','child_of',[user.company_id.id])]</field>
+        </record>
+    </data>
+</openerp>

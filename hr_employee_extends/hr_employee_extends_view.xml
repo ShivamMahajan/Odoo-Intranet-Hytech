@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+	<!-- Extending Employee Form by adding New Fields -->
+    <record id="hr_employee_extends_new_view" model="ir.ui.view">
+            <field name="name">hr.employee.view.extends_new_view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">       
+               <xpath expr="//notebook/page[@string='Personal Information']/group/group[@string='Contact Information']" position="inside"> 
+                    <field name="address_home_id" invisible="1"/>
+                    <field name="pan_number"/>
+                    <field name="personal_email_id" widget="email"/>
+                    <field name="phone_landline" placeholder="+01323 623646"/>
+                    <field name="self_mobile" placeholder="+91 78678562364"/>
+                    <field name="mobile_alternative" placeholder="+91 78678584364"/>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Personal Information']/group/group[@string='Contact Information']" position="after">
+                    <group string="Personal Address Information">
+                        <field name="corrospondence_address" />
+                        <field name="permanent_address" />
+                         <field name="permanent_pin" />
+                    </group>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Personal Information']/group/group[@string='Status']" position="inside">
+                    <field name="spouse_name" attrs="{'invisible': [('marital','!=', 'married')]}"/>
+                    <field name="anniversary_date" attrs="{'invisible': [('marital','!=', 'married')]}"/>
+                    <field name="children" attrs="{'invisible': [('marital','!=', 'married')]}"/>
+                    <field name="blood_group" placeholder="B+"/>
+                    <field name="father_name"/>
+                    
+                </xpath>
+
+
+                <xpath expr="//notebook/page[@string='HR Settings']/group/group[@string='Active']" position="before">
+                    <group string="Graduation Qualification Details">
+                                    <field name="gqualification_type"/>
+                                    <field name="gpercentage_score" string="Percentage(%)"/> 
+                                    <field name="gemployee_college"/>
+                                    <field name="gyear_of_passing"/>
+                    </group>
+                    <group string="Post Graduation Qualification Details">
+                                    <field name="pqualification_type"/>
+                                    <field name="ppercentage_score" string="Percentage(%)"/> 
+                                    <field name="pemployee_college"/>
+                                    <field name="pyear_of_passing"/>
+                    </group>
+                    <group string="Technical Details">
+                                    <field name="other_qualification"/>
+                                    <field name="previous_employer"/>
+                                    <field name="technical_expertise"/>
+                    </group>
+
+                </xpath>
+
+                 <xpath expr="//notebook/page[@string='HR Settings']/group/group[@string='Active']" position="inside">
+                    <field name="employee_status"/>
+                    <field name="employee_ctc" />
+                </xpath>
+
+                <xpath expr="//notebook/page[@string='Public Information']/group/group[@string='Related System User']" position="after">
+                    <group string="Add Key Skills">
+                            <field name="key_skill" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                            <button string="Add Key skills" type="action" name="%(skillset.addskillset_action_window)d" class="oe_highlight" />
+                                   
+                    </group>
+
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Extending Tree View of Employee Record -->
+         <record id="view_employee_filter_new_extends" model="ir.ui.view">
+            <field name="name">Employees Search Extends</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@string='Job']" position="after">
+                    <filter string="Graduation Qualification" icon="terp-personal" domain="[]" context="{'group_by':'gqualification_type'}"/>  
+                    <filter string="Post Graduation Qualification" icon="terp-personal" domain="[]" context="{'group_by':'pqualification_type'}"/>  
+                    <filter string="College/Instituation" icon="terp-personal" domain="[]" context="{'group_by':'gemployee_college'}"/>  
+                    <filter string="Employee Status" icon="terp-personal" domain="[]" context="{'group_by':'employee_status'}"/>  
+                </xpath>
+            </field>
+         </record>
+
+
+        <!--Form View For Employee Instituation-->
+        <record id="view_hr_employee_instituation" model="ir.ui.view">
+            <field name="name">hr.employee.instituation.form</field>
+            <field name="model">hr.employee.instituation</field>
+            <field name="arch" type="xml">
+                <form string="Employee Instituation">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Action Employee College -->
+        <record id="open_view_hr_employee_college" model="ir.actions.act_window">
+            <field name="name">Employee Instituation</field>
+            <field name="res_model">hr.employee.instituation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add Instituation for Employee
+              </p>
+            </field>
+        </record>
+        
+     <menuitem action="open_view_hr_employee_college" id="menu_open_view_hr_employee_college" sequence="20" parent="hr.menu_hr_configuration"/>
+
+     <!--Form View For Employee Qualification-->
+        <record id="view_hr_employee_qualification" model="ir.ui.view">
+            <field name="name">hr.employee.qualification.form</field>
+            <field name="model">hr.employee.qualification</field>
+            <field name="arch" type="xml">
+                <form string="Employee Qualification">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Action Employee College -->
+        <record id="open_view_hr_employee_qualification" model="ir.actions.act_window">
+            <field name="name">Employee Qualification</field>
+            <field name="res_model">hr.employee.qualification</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add Qualification for Employee
+              </p>
+            </field>
+        </record>
+        
+     <menuitem action="open_view_hr_employee_qualification" id="menu_open_view_hr_employee_qualification" sequence="21" parent="hr.menu_hr_configuration"/>
+
+
+    </data>
+
+    <!-- Cron Job To Fetch Employee Image From User Record -->
+     <data noupdate="0">
+        <record forcecreate="True" id="ir_cron_fetch_employee_images" model="ir.cron">
+            <field name="name">Fetch Employee Image From User Record</field>
+            <field eval="True" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="'hr.employee'" name="model" />
+            <field eval="'run_fetch_employee_image_from_users'" name="function" />
+            <field eval="'()'" name="args" />
+        </record>
+
+    </data>
+</openerp>

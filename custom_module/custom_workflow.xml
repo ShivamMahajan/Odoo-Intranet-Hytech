@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+
+        <!-- Create new activity for the new state -->
+        <record id="act_my_new_state" model="workflow.activity">
+            <field name="wkf_id" ref="sale.wkf_sale"/>
+            <field name="name">my_new_state</field>
+            <field name="kind">function</field>
+            <field name="action">action_my_new_function()</field>
+        </record>
+
+        <!-- Create transitions -->
+
+        <!-- From Draft to new state -->
+        <record id="trans_draft_my_new_state" model="workflow.transition">
+            <field name="act_from" ref="sale.act_draft"/>
+            <field name="act_to" ref="act_my_new_state"/>
+            <field name="signal">signal_my_new_state_forward</field>
+        </record>    
+
+        <!-- From new state to Quotation Sent -->
+        <record id="trans_new_state_sent" model="workflow.transition">
+            <field name="act_from" ref="act_my_new_state"/>
+            <field name="act_to" ref="sale.act_sent"/>
+            <field name="signal">signal_quotation_sent</field>
+        </record>
+
+        <!-- From Quotation Sent back to new state -->
+        <record id="trans_sent_new_state" model="workflow.transition">
+            <field name="act_from" ref="sale.act_sent"/>
+            <field name="act_to" ref="act_my_new_state"/>
+            <field name="signal">signal_my_new_state_backward</field>
+        </record>  
+
+    </data>
+</openerp>

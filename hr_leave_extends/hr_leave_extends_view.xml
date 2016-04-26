@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    		<!--Adding Reason Field in Hr Holiday Form -->
+ 		<record id="edit_holiday_new_inherit" model="ir.ui.view">
+            <field name="name">hr.holiday.leaves.form.inherit</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+              <!-- New Button Added for Cancellation process-->
+
+                <xpath expr="/form/header/button[@string='Refuse']" position="after" >
+
+                    <button string="Cancel" name="%(hr_leave_extends.action_hr_holidays_leave_reason)d" states="validate1,validate" type="action" class="oe_highlight" context="{'event_type':'cancel'}"/>
+
+                    <button string="Approve Cancel" name="leave_cancel_approve" states="cancel_approval" type="object" 
+                      class="oe_highlight" groups="base.group_hr_user,base.group_hr_project_manager" />
+
+                    <button string="Reset" name="reset_to_draft" type="object"
+                            attrs="{'invisible': [('state', 'not in', ['cancel_approval'])]}" groups="base.group_hr_user,base.group_hr_project_manager"/>
+
+                </xpath>
+
+                <!-- Enchancing View as per new requirement -->
+
+                <xpath expr="/form/sheet/group/group/field[@name='holiday_status_id']" position="after" >
+                            <field name="is_el" invisible="1"/>
+                            <field name="is_cl" invisible="1"/>
+                            <field name="is_unpaid" invisible="1"/>
+                            <field name="is_sandwich" invisible="1"/>
+                            <field name="sandwich_days" invisible="1"/>
+                            <field name="actual_num_temp_day" invisible="1"/>
+
+                            <field name="advanced_leave" attrs="{'invisible': ['|',('type', '=', 'add'),('is_el','=',False)]}" on_change="onchange_advance_leave(number_of_days_temp,holiday_status_id,advanced_leave,advanced_leave_unit,employee_id)"/>
+
+                            <field name="advanced_leave_unit" attrs="{'invisible': ['|',('type', '=', 'add'),('advanced_leave','=','no')]}"
+                            on_change="onchange_advance_leave(number_of_days_temp,holiday_status_id,advanced_leave,advanced_leave_unit,employee_id)" />
+
+                            <field name="carry_forward" attrs="{'invisible': [('type', '=', 'remove')], 'required': [('type', '=', 'add')]}" class="oe_inline" on_change="onchange_carry_and_allocate(carry_forward, allocated_number)"/>
+
+                            <field name="allocated_number" attrs="{'invisible': [('type', '=', 'remove')], 'required': [('type', '=', 'add')]}" class="oe_inline" on_change="onchange_carry_and_allocate(carry_forward, allocated_number)"/>
+                          
+                </xpath>
+
+                 <xpath expr="/form/sheet/group/group/field[@name='manager_id']" position="after">
+                          <field name="record_leave_year" invisible="1" />
+                         <label for="leave_allocate_year_start" string="Effected Duration" attrs="{'invisible': [('type', '=', 'remove')]}"/>
+                            <div attrs="{'invisible': [('type', '=', 'remove')]}">
+                                    <field name="leave_allocate_year_start" attrs="{'required': [('type', '=', 'add')]}" class="oe_inline" /> <label string="to" class="oe_inline"/>
+                                    <field name="leave_allocate_year_end" attrs="{'required': [('type', '=', 'add')]}" class="oe_inline"/>
+                              </div>
+                </xpath>
+
+                <xpath expr="/form/sheet/field[@name='notes']" position="before" >
+                  <field name="is_leave_more" invisible="1" />
+                  <field name="total_available_leave" invisible="1"/>
+                  <field name="extra_leave_applied" invisible="1" />
+
+                  <div attrs="{'invisible':['|',('type','=','add'),('is_unpaid','=',True)]}">
+                      <p>
+                         In the current month you can avail leaves of <b><field name="sub_total_available_leave"  readonly="1" required="0" class="oe_inline" nolabel="1"/> days. </b>
+                      </p>
+                      
+
+                      <p attrs="{'invisible':[('is_leave_more','=',False)]}">
+                          You have applied more than 5 leaves in this Salary month. So for every more than 5 leave +2 is added in the taken leave and For you its amount is <b><field name="sub_extra_leave_applied" required="0" readonly="1" class="oe_inline" nolabel="1" /> days.</b>
+                      </p>
+                  </div>
+
+                </xpath>     
+                
+            </field>
+        </record>
+
+          <!--Adding Reason Field in Hr Holiday Allocate Form -->
+    <record id="edit_holiday_allocate_inherit" model="ir.ui.view">
+            <field name="name">hr.holiday.leaves.form.inherit.allocate</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new_allocate"/>
+            <field name="arch" type="xml">
+
+                <!-- Enchancing View as per new requirement -->
+
+                <xpath expr="/form/sheet/group/group/field[@name='holiday_status_id']" position="after" >
+                            <field name="is_el" invisible="1"/>
+                            <field name="is_cl" invisible="1"/>
+                            <field name="is_unpaid" invisible="1"/>
+                            <field name="is_sandwich" invisible="1"/>
+                            <field name="sandwich_days" invisible="1"/>
+                            <field name="actual_num_temp_day" invisible="1"/>
+
+                            <field name="advanced_leave" attrs="{'invisible': ['|',('type', '=', 'add'),('is_el','=',False)]}" on_change="onchange_advance_leave(number_of_days_temp,holiday_status_id,advanced_leave,advanced_leave_unit,employee_id)"/>
+
+                            <field name="advanced_leave_unit" attrs="{'invisible': ['|',('type', '=', 'add'),('advanced_leave','=','no')]}"
+                            on_change="onchange_advance_leave(number_of_days_temp,holiday_status_id,advanced_leave,advanced_leave_unit,employee_id)" />
+
+                            <field name="carry_forward" attrs="{'invisible': [('type', '=', 'remove')], 'required': [('type', '=', 'add')]}" class="oe_inline" on_change="onchange_carry_and_allocate(carry_forward, allocated_number)"/>
+
+                            <field name="allocated_number" attrs="{'invisible': [('type', '=', 'remove')], 'required': [('type', '=', 'add')]}" class="oe_inline" on_change="onchange_carry_and_allocate(carry_forward, allocated_number)"/>
+                          
+                </xpath>
+
+                 <xpath expr="/form/sheet/group/group/field[@name='manager_id']" position="after">
+                          <field name="record_leave_year" invisible="1" />
+                         <label for="leave_allocate_year_start" string="Effected Duration" attrs="{'invisible': [('type', '=', 'remove')]}"/>
+                            <div attrs="{'invisible': [('type', '=', 'remove')]}">
+                                    <field name="leave_allocate_year_start" attrs="{'required': [('type', '=', 'add')]}" class="oe_inline" /> <label string="to" class="oe_inline"/>
+                                    <field name="leave_allocate_year_end" attrs="{'required': [('type', '=', 'add')]}" class="oe_inline"/>
+                              </div>
+                </xpath>
+
+                <xpath expr="/form/sheet/field[@name='notes']" position="before" >
+                  <field name="is_leave_more" invisible="1" />
+                  <field name="total_available_leave" invisible="1"/>
+                  <field name="extra_leave_applied" invisible="1" />
+
+                  <div attrs="{'invisible':[('type','=','add')]}">
+                      <p>
+                         In the selected duration you can avail a leaves of <b><field name="sub_total_available_leave"  readonly="1" required="0" class="oe_inline" nolabel="1"/> days. This available Leave does not include advance leaves. </b>
+                      </p>
+                      
+
+                      <p attrs="{'invisible':[('is_leave_more','=',False)]}">
+                          You have applied more than 5 leaves in this Salary month. So for every more than 5 leave +2 is added in the taken leave and For you its amount is <b><field name="sub_extra_leave_applied" required="0" readonly="1" class="oe_inline" nolabel="1" /> days.</b>
+                      </p>
+                  </div>
+
+                </xpath>     
+                
+            </field>
+        </record>
+
+        
+        <!-- Extended Calender View -->
+        <record id="view_holiday_new_calendar_extends" model="ir.ui.view">
+            <field name="name">Leave Request extends</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_holiday_new_calendar"/>
+            <field name="arch" type="xml">
+                    <field name="holiday_status_id" position="after">
+                        <field name="state_value"/>
+                    </field>
+            </field>
+        </record>
+        
+        <menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_open_allocation_holidays" action="hr_holidays.open_allocation_holidays" groups="base.group_hr_manager,base.group_hr_user"/>
+
+        <!--<menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_open_allocation_holidays" action="hr_holidays.open_allocation_holidays" groups="base.group_hr_user"/>-->
+
+        <menuitem name="Leave Requests to Approve" parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_request_approve_holidays" action="hr_holidays.request_approve_holidays" groups="base.group_hr_user,base.group_hr_project_manager"/>
+
+        <menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_request_approve_allocation" action="hr_holidays.request_approve_allocation" groups="account.group_account_manager"/>
+
+        <!-- Date of Joing Field in Employee Form -->
+        <record id="view_employee_form_doj_new" model="ir.ui.view">
+            <field name="name">hr.employee.doj.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/group/group/field[@name='country_id']" position="after" >
+                        <field name="date_of_joining"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Leave Mechanism Tree View -->
+        <record model="ir.ui.view" id="view_leave_mechanism_tree">
+            <field name="name">leave.mechanism.tree.view</field>
+            <field name="model">leave.mechanism</field>
+            <field name="arch" type="xml">
+                <tree string="Leave Mechanism">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Leave Mechanism Form View -->
+         <record model="ir.ui.view" id="edit_leave_mechanism_form">
+            <field name="name">leave.mechanism.form.view</field>
+            <field name="model">leave.mechanism</field>
+            <field name="arch" type="xml">
+                <form string="Leave Request" >
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="company_ids" widget="many2many_tags" groups="base.group_system"/>
+                            <!-- <field name="company_id" widget="selection"/> -->
+                        </group>
+                    </group>
+                  <notebook>
+                    <page string="Mechanism Lines">
+                            <field name="mechanism_line">
+                              <tree string="Leave Mechanism Lines" editable="bottom">
+                                <field name="year_value"/>
+                                <field name="name"/>
+                                <field name="subjected_cl"/>
+                                <field name="subjected_el"/>
+                              </tree>
+                            </field>
+                    </page>
+                  </notebook>
+                    
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+
+         <!-- Leave Mechanism action -->
+
+          <record model="ir.actions.act_window" id="action_leave_mechanism_new">
+            <field name="name">Leave Mechanism Chart</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">leave.mechanism</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new leave Mechanism.
+              </p><p>
+                Note: You must have only one leave Mechanism which is active for a year.
+                If you want to create new one deactivate previous one.
+              </p>
+            </field>
+        </record>
+        
+
+        <record model="ir.actions.act_window.view" id="action_hr_leave_mechanism_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_leave_mechanism_tree"/>
+            <field name="act_window_id" ref="action_leave_mechanism_new"/>
+        </record>
+
+
+        <menuitem name="Leave Mechanism Chart" action="action_leave_mechanism_new" id="menu_open_view_leave_mechanism" parent="hr_holidays.menu_open_ask_holidays" sequence="38"/>
+
+    	
+	</data>
+
+ 
+
+
+     <data noupdate="0">
+        <record forcecreate="True" id="ir_cron_employee_holiday_manager" model="ir.cron">
+           <field name="name">Fetch Manager for Holiday Request in Approve State</field>
+           <field eval="True" name="active" />
+           <field name="user_id" ref="base.user_root" />
+           <field name="interval_number">1</field>
+           <field name="interval_type">minutes</field>
+           <field name="numbercall">-1</field>
+           <field eval="'hr.holidays'" name="model" />
+           <field eval="'fetching_employee_manager'" name="function" />
+           <field eval="'()'" name="args" />
+          <field name="active" eval="False"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_employee_holiday_leave_state" model="ir.cron">
+           <field name="name">One Time Fetch Leave state Record</field>
+           <field eval="True" name="active" />
+           <field name="user_id" ref="base.user_root" />
+           <field name="interval_number">1</field>
+           <field name="interval_type">minutes</field>
+           <field name="numbercall">-1</field>
+           <field eval="'hr.holidays'" name="model" />
+           <field eval="'fetching_leave_state_value'" name="function" />
+           <field eval="'()'" name="args" />
+           <field name="active" eval="False"/>
+        </record>
+
+    </data>
+
+    <!-- Data For Leave Mechanism Chart -->
+
+    <data>
+            <record model="leave.mechanism" id="hr_leave_mechanism_name">
+                <field name="name">Leave Mechanism Chart</field>
+            </record>
+
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_1">
+                <field name="year_value">1</field>
+                <field name="name">January</field>
+                <field name="subjected_cl">1</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_2">
+                <field name="year_value">2</field>
+                <field name="name">February</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_3">
+                <field name="year_value">3</field>
+                <field name="name">March</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_4">
+                <field name="year_value">4</field>
+                <field name="name">April</field>
+                <field name="subjected_cl">1</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_5">
+                <field name="year_value">5</field>
+                <field name="name">May</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_6">
+                <field name="year_value">6</field>
+                <field name="name">June</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">2</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_7">
+                <field name="year_value">7</field>
+                <field name="name">July</field>
+                <field name="subjected_cl">1</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_8">
+                <field name="year_value">8</field>
+                <field name="name">August</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_9">
+                <field name="year_value">9</field>
+                <field name="name">September</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_10">
+                <field name="year_value">10</field>
+                <field name="name">October</field>
+                <field name="subjected_cl">1</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+            <record model="leave.mechanism.line" id="hr_leave_mechanism_line_11">
+                <field name="year_value">11</field>
+                <field name="name">November</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">1</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+             <record model="leave.mechanism.line" id="hr_leave_mechanism_line_12">
+                <field name="year_value">12</field>
+                <field name="name">December</field>
+                <field name="subjected_cl">0</field>
+                <field name="subjected_el">2</field>
+                <field name="mechanism_id" ref="hr_leave_mechanism_name" />
+            </record>
+
+
+    </data>
+
+     <data noupdate="0">
+        <record forcecreate="True" id="ir_cron_scheduler_leave_activities_log" model="ir.cron">
+           <field name="name">Leave Exceptions Logs</field>
+           <field eval="True" name="active" />
+           <field name="user_id" ref="base.user_root" />
+           <field name="interval_number">1</field>
+           <field name="interval_type">weeks</field>
+           <field name="numbercall">-1</field>
+           <field eval="'hr.holidays'" name="model" />
+           <field eval="'run_leave_log_by_employee'" name="function" />
+           <field eval="'()'" name="args" />
+           <field name="active" eval="True"/>
+        </record>
+
+
+        <record model="ir.config_parameter" id="hr_leave_exception_config_to">
+            <field name="key">hr.leave.exception.email_to</field>
+            <field name="value">m</field>
+        </record>
+    </data>
+
+</openerp>

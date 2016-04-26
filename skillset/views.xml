@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="skillset.list">
+      <field name="name">skillset list</field>
+      <field name="model">skillset.skillset</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="active"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="skillset.form">
+      <field name="name">skillset list</field>
+      <field name="model">skillset.skillset</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+           <group string="Key Skills">
+          <field name="name" />
+          <field name="active"/>
+        </group>
+      </sheet>
+    </form>
+      </field>
+    </record>
+    
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="skillset.action_window">
+      <field name="name">Skill Set</field>
+      <field name="res_model">skillset.skillset</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+<record model="ir.ui.view" id="add_skillset_form">
+      <field name="name">Add Skill Sets</field>
+      <field name="model">skillset.add.skillsets</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+           <group string="Key Skills">
+          <field name="new_key_skill" widget="many2many_tags" options="{'no_create_edit': True}"/>
+        </group>
+        <group>
+          <field name='user_id' invisible="1"/>
+        </group>
+         <footer>
+                        <button name="add_key_skill" string="Add" type="object" class="oe_highlight"/>
+                        or
+                        <button name="cancel" string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+      </sheet>
+    </form>
+      </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="addskillset_action_window">
+      <field name="name">Add Skill Set</field>
+      <field name="res_model">skillset.add.skillsets</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+   
+    
+   <record id="crm_lead_currency_id" model="ir.ui.view">
+            <field name="name">crm.lead.currency.edit.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+             
+                <field name="planned_revenue" position="before">
+                  <field name="currency_id"/>
+                </field>
+              </field>
+            </record>
+
+  
+    
+    
+    <menuitem name="Key Skills" id="menu_1_list" parent="hr.menu_hr_configuration"
+              action="skillset.action_window" groups="base.group_hr_manager" />
+    
+ 
+  
+  </data>
+</openerp>

@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+
+
+    	<!-- Extends Apprisal Form -->
+    	<record model="ir.ui.view" id="view_hr_evaluation_interview_form_extends">
+            <field name="name">hr_evaluation.interview.form.extends</field>
+            <field name="model">hr.evaluation.interview</field>
+            <field name="inherit_id" ref="hr_evaluation.view_hr_evaluation_interview_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath name="action_start_survey" position="after"> -->
+               <xpath expr="//form/sheet" position="inside">
+                         <notebook>
+                            <page string="Appraisal Rating">
+                                <field name="appraisal_rating_ids">
+                                	<tree string="Appraisal rating">
+                                		<field name="employee_id" invisible="1"/>
+                                		<field name="name"/>
+                                		<field name="appraisee_rating" />
+                                        <field name="appraisee_comment" />
+                                		<field name="appraiser_rating" />
+                                        <field name="appraiser_comment" />
+                                		<field name="evaluation_extends_id" invisible="1"/>
+                                		<field name="interview_extends_id" invisible="1"/>
+                                		<field name="appraisal_plan_id" invisible="1"/>
+                                		<field name="cycle_type" invisible="1" />
+                                		<field name="date_from" invisible="1" />
+                                		<field name="date_to" invisible="1" />
+                                		<field name="user_id" invisible="1"/>
+                                		
+                                	</tree>
+                                </field>
+                            </page>
+                    </notebook>
+                </xpath>
+                   
+            </field>
+        </record>
+        <!-- View and Action for Parameter Rarting-->
+        <record model="ir.ui.view" id="view_hr_evaluation_appraisal_rating_tree">
+            <field name="name">hr_evaluation.parameter.rating.tree</field>
+            <field name="model">hr_evaluation.parameter.rating</field>
+            <field name="arch" type="xml">
+                <tree string="Appraisal Rating Tree" create="false" edit="false">
+                    <field name="employee_id"/>
+                    <field name="name"/>
+                    <field name="appraisee_rating" />
+                    <field name="appraisee_comment" />
+                    <field name="appraiser_rating" />
+                    <field name="appraiser_comment" />
+                    <field name="manager" />
+                    <field name="company_id" />
+                    <field name="evaluation_extends_id" invisible="1"/>
+                    <field name="interview_extends_id" invisible="1"/>
+                    <field name="appraisal_plan_id"/>
+                    <field name="cycle_type" />
+                    <field name="date_from" invisible="1"/>
+                    <field name="date_to" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="date" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_evaluation_appraisal_rating_form">
+            <field name="name">hr_evaluation.parameter.rating.form</field>
+            <field name="model">hr_evaluation.parameter.rating</field>
+            <field name="arch" type="xml">
+                <form string="Appraisal Rating Form" create="false" edit="false">
+                	<sheet>
+                    	<label for="employee_id" class="oe_edit_only"/>
+                    	<h1>
+                        	<field name="employee_id" class="oe_inline"/>
+                    	</h1>
+                    	<group>
+                        	<group>
+                            	<field name="name" readonly="1"/>
+                            	<field name="appraisee_rating"/>
+                                <field name="appraisee_comment" />
+                            	<field name="appraiser_rating"/>
+                                <field name="appraiser_comment" />
+                            	<field name="evaluation_extends_id" readonly="1"/>
+                            	<field name="date_to"/>
+                            	<field name="date" readonly="1"/>
+                       	 	</group>
+                        	<group>
+                            	<field name="interview_extends_id" readonly="1"/>
+                            	<field name="appraisal_plan_id" readonly="1"/>
+                            	<field name="cycle_type" readonly="1"/>
+                            	<field name="date_from"/>
+                            	<field name="user_id"/>
+
+                        	</group>
+                    	</group>
+              		</sheet>
+              	</form>
+            </field>
+        </record>
+
+        <record id="view_hr_evaluation_appraisal_rating_search" model="ir.ui.view">
+            <field name="name">hr_evaluation.parameter.rating.search</field>
+            <field name="model">hr_evaluation.parameter.rating</field>
+            <field name="arch" type="xml">
+                <search string="Search Appraisal Rating">
+                    <field name="employee_id" string="Employee"/>
+                    <field name="manager" string="Appraiser"/>
+                   
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="group_employee_id" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
+                         <filter string="Appraisal Plan" name="group_plan_id" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'appraisal_plan_id'}"/>
+                        <filter string='Appraisal Period' icon="terp-go-month" domain="[]" context="{'group_by' : 'date_to'}" help="Appraisals by Period" />
+                        <filter string='Appraisal Month' icon="terp-go-month" domain="[]" context="{'group_by' : 'date'}" help="Appraisals by Month" />
+                        <filter string="Cycle Type" name="cycle" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'cycle_type'}"/>
+                        <filter string="Parameter Name" name="group_by_parameter" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'name'}"/>
+                        <filter string="Appraiser" name="appraiser_name" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'manager'}"/>
+                        <filter string="Company" name="company_name" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'company_id'}"/>
+                        
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="open_view_hr_evaluation_appraisal_rating">
+            <field name="name">Appraisal Rating Record</field>
+            <field name="res_model">hr_evaluation.parameter.rating</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_evaluation_appraisal_rating_search"/>
+           	<field name="context">{'search_default_group_employee_id':1,'search_default_cycle':1,'search_default_group_plan_id':1,'search_default_group_by_parameter':1}</field>
+            
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+               This Menu item will be used to show parameter based Results.
+              </p>
+            </field>
+        </record>
+
+        <menuitem parent="hr_evaluation.menu_eval_hr" id="menu_open_view_hr_evaluation_appraisal_rating_tree"
+            action="open_view_hr_evaluation_appraisal_rating" />
+
+    <!--Genrate Appraisal Form Action for HR Employee-->
+        <record id="action_generate_appraisal_form" model="ir.actions.server">
+            <field name="name">Generate Appraisal Form</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                if context.get('active_model') == 'hr.employee' and context.get('active_ids'):
+                    self.generate_appraisal_form(cr, uid, context['active_ids'], context=context)
+            </field>
+        </record>
+
+        <record id="ir_generate_appraisal_form" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'hr.employee'" name="model"/>
+            <field name="name">Generate Appraisal Form</field>
+            <field eval="'ir.actions.server,%d'%action_generate_appraisal_form" name="value"/>
+        </record>
+
+        <!--End Of Logic-->
+
+        <menuitem action="base.action_res_users" id="menu_action_hr_res_users" parent="hr.menu_hr_configuration" groups="base.group_hr_manager"/>
+
+	</data>
+</openerp>

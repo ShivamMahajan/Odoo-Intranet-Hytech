@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+  	<record id="view_hr_evaluation_resend_reason" model="ir.ui.view">
+            <field name="name">hr.evaluation.resend.reason.form</field>
+            <field name="model">hr.evaluation.resend.reason</field>
+            <field name="arch" type="xml">
+            <form string="Reason for Resending the Appraisal form">
+                <group>
+                    <field name="reason_for_resend" />
+                  
+                </group>
+                <footer>
+                   <button string="Resend" class="oe_highlight" name="action_resend_appraisal" type="object"/>
+                   or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+
+
+  	<record id="action_hr_evaluation_resend_reason" model="ir.actions.act_window">
+            <field name="name">Resend Appraisal Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.evaluation.resend.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+  </data>
+</openerp>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<record id="view_hr_employee_personal_information_tree" model="ir.ui.view">
+            <field name="name">hr.employee.personal_info.tree</field>
+            <field name="model">hr.employee.personal_info</field>
+            <field name="arch" type="xml">
+                <tree string="Employees">
+                    <field name="name"/>
+                    <field name="work_email"/>
+                   	<field name="identification_id"/>
+                   	<field name="date_of_joining"/>
+                    <field name="birthday"/>
+                </tree>
+            </field>
+        </record>
+    	<!--Form View For Employee Personal-->
+        <record id="view_hr_employee_personal_information_form" model="ir.ui.view">
+            <field name="name">hr.employee.personal_info.form</field>
+            <field name="model">hr.employee.personal_info</field>
+            <field name="arch" type="xml">
+                <form string="Employee Instituation">
+                    <sheet>
+                    	<!--<field name="image_medium" widget='image' class="oe_left oe_avatar"/>-->
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                            <label for="work_email" class="oe_edit_only"/>
+                            <field name="work_email" widget="email"/>
+                           
+                        </div>
+                        <group>
+                            <group string="Citizenship &amp; Other Info">
+                                        <field name="country_id" options='{"no_open": True}'/>
+                                        <field name="date_of_joining"/>
+                                        <field name="identification_id" />
+                                        <field name="passport_id" />
+                                        <field name="otherid" />
+                             </group>
+                             <group string="Contact Information">
+                                        <field name="pan_number"/>
+                    					<field name="personal_email_id" widget="email"/>
+                    					<field name="phone_landline" placeholder="+01323 623646"/>
+                    					<field name="self_mobile" placeholder="+91 78678562364"/>
+                    					<field name="mobile_alternative" placeholder="+91 78678584364"/>
+                             </group>
+
+                            <group string="Personal Address Information">
+                        			<field name="corrospondence_address" />
+                        			<field name="permanent_address" />
+                        			<field name="permanent_pin" />
+                    		</group>
+
+                    		<group string="Status">
+                                        <field name="gender"/>
+                                        <field name="marital"/>
+                                        <field name="spouse_name" attrs="{'invisible': [('marital','!=', 'married')]}"/>
+                    					<field name="anniversary_date" attrs="{'invisible': [('marital','!=', 'married')]}"/>
+                    					<!--<field name="children" attrs="{'invisible': [('marital','!=', 'married')]}"/>-->
+                    					<field name="blood_group" placeholder="B+"/>
+                    					<field name="father_name"/>
+                            </group>
+                            
+                            <group string="Graduation Qualification Details">
+                            		<field name="gqualification_type"/>
+                        			<field name="gpercentage_score" string="Percentage(%)"/> 
+                        			<field name="gemployee_college"/>
+                                    <field name="gyear_of_passing"/>
+                    		</group>
+                    		 <group string="Post Graduation Qualification Details">
+                    		 		<field name="pqualification_type"/>
+                        			<field name="ppercentage_score" string="Percentage(%)"/> 
+                        			<field name="pemployee_college"/>
+                                    <field name="pyear_of_passing"/>
+                    		</group>
+                    		<group string="Technical Details">
+                                    <field name="other_qualification"/>
+                        			<field name="previous_employer"/>
+                        			<field name="technical_expertise"/>
+                                    <field name="active"/>
+                                    <field name="user_id" />
+                    		</group>
+                            <group string="Birth Details">
+                                    <field name="birthday"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_employee_personal_information_filter" model="ir.ui.view">
+            <field name="name">Employees Personal Information</field>
+            <field name="model">hr.employee.personal_info</field>
+            <field name="arch" type="xml">
+                <search string="Employees Personal Information">
+                    <field name="name" string="Employees" filter_domain="['|',('work_email','ilike',self),('name','ilike',self)]"/>
+                    <group expand="0" string="Group By">
+                         <filter string="Graduation Qualification" icon="terp-personal" domain="[]" context="{'group_by':'gqualification_type'}"/>  
+                        <filter string="Post Graduation Qualification" icon="terp-personal" domain="[]" context="{'group_by':'pqualification_type'}"/>  
+                        <filter string="College/Instituation" icon="terp-personal" domain="[]" context="{'group_by':'gemployee_college'}"/>  
+                    </group>
+                </search>
+             </field>
+         </record>
+
+        <!--Action Employee Personal Information -->
+        <record id="open_view_hr_employee_personal_info" model="ir.actions.act_window">
+            <field name="name">Employee Personal Information</field>
+            <field name="res_model">hr.employee.personal_info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add Employee Personal Details
+              </p>
+            </field>
+        </record>
+
+       <record id="base.action_employee_personal_info_view" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_employee_personal_information_tree"/>
+            <field name="act_window_id" ref="open_view_hr_employee_personal_info"/>
+        </record>
+        
+     <menuitem action="open_view_hr_employee_personal_info" id="menu_open_view_hr_employee_personal_info" sequence="4" parent="hr.menu_hr_main"/>
+
+	</data>    	
+</openerp>

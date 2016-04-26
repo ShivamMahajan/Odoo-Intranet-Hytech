@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!-- Project Form For Sale Form Button-->
+		<record model="ir.ui.view" id="project_creation_form_sale">
+            <field name="name">project.creation.form.sale</field>
+            <field name="model">project.project</field>
+            <field name="arch" type="xml">
+        		<form string="Automate Project">
+            		<sheet string="Project Creation">
+               			<div class="oe_title">
+                    		<field name="use_existing" string="Is Existing Project" class="oe_inline"/>
+                        		<label for="name" class="oe_edit_only" string="Project Name"/>
+                        			<h1>
+                            			<field name="name" string="Project Name"/>
+                        			</h1>
+                        			<div name="options_active">
+                            			<field name="use_tasks" class="oe_inline"/>
+                            			<label for="use_tasks" string="Use Tasks"/>
+                        			</div>
+                    	</div>
+                    	<group>
+                        	<group col="4">
+                            	<field name="user_id" string="Project Manager"/>
+                            	<newline/>
+                            	<field name="partner_id" on_change="onchange_partner_id(partner_id)" string="Customer"/>
+                        	</group>
+                    	</group>
+                  		<notebook>
+                        	<page string="Related Documents" name="document">  
+                            		<field name="pd_id">
+                                		<tree string="Project Related Document" editable="bottom">
+                                    		<field name="name"/>
+                                    		<field name="attached_document"/>
+                               	 		</tree>
+                            		</field>
+                        	</page>
+                        	<page string="Change Requests" name="cr">
+                            		<field name="pcr_id">
+                                		<tree string="Change Request" editable="bottom">
+                                    		<field name="name"/>
+                                    		<field name="description"/>
+                                    		<field name="create_date"/>
+                                    		<field name="start_date"/>
+                                    		<field name="end_date"/>
+                                    		<field name="total_revenue"/>
+                                		</tree>
+                            		</field>
+                        	</page>
+                   		 </notebook>
+                	</sheet> 
+            	</form>
+            </field>
+    </record>
+    
+	</data>
+</openerp>

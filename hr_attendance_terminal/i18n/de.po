@@ -1,0 +1,227 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* hr_attendance_terminal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-07-01 07:06+0000\n"
+"PO-Revision-Date: 2011-07-01 07:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Functions"
+msgstr "Funktionen"
+
+#. module: hr_attendance_terminal
+#: model:ir.model,name:hr_attendance_terminal.model_hr_attendance
+msgid "Attendance"
+msgstr "Anwesenheitszeit"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Set Terminal Time"
+msgstr "Setze Terminal Uhrzeit"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Terminal"
+msgstr "Terminal"
+
+#. module: hr_attendance_terminal
+#: constraint:hr.attendance.terminal:0
+msgid "Please check the Sign Out Minute Value!"
+msgstr "Bitte korrigieren Sie den 'Sign Out Minute' Wert!"
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,location:0
+msgid "Location"
+msgstr "Standort"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Terminal switches to Sign-In at:"
+msgstr "Terminal schaltet auf Sign-In um:"
+
+#. module: hr_attendance_terminal
+#: model:ir.model,name:hr_attendance_terminal.model_hr_employee
+msgid "Employee"
+msgstr "Mitarbeiter"
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,sign_out_hour:0
+msgid "Sign out Hour"
+msgstr "Sign out Stunde"
+
+#. module: hr_attendance_terminal
+#: help:hr.attendance.terminal,sign_in_minute:0
+#: help:hr.attendance.terminal,sign_out_minute:0
+msgid "Input with two digits, e.g. 30"
+msgstr "Eingabe mit zwei Stellen, Bsp. 30"
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,sign_in_minute:0
+#: field:hr.attendance.terminal,sign_out_minute:0
+msgid "Sign in Minute"
+msgstr "Sign in Minute"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+#: model:ir.actions.act_window,name:hr_attendance_terminal.action_hr_attendance_terminal
+#: model:ir.ui.menu,name:hr_attendance_terminal.hr_menu_hr_attendance_terminal
+msgid "Terminals"
+msgstr "Terminals"
+
+#. module: hr_attendance_terminal
+#: model:ir.module.module,shortdesc:hr_attendance_terminal.module_meta_information
+msgid "Time Attendance Terminal"
+msgstr "Time Attendance Terminal"
+
+#. module: hr_attendance_terminal
+#: model:ir.module.module,description:hr_attendance_terminal.module_meta_information
+msgid "    Fetches SignIns/Outs from RFID Office Timer II Terminals via Scheduled Action or manually.\n"
+"Sends the Employees RFID Key and Time to the Terminals.\n"
+"HR Manager Role required for setting up the Terminals.\n"
+"\n"
+"Office Timer II Terminals are available at:\n"
+"\n"
+"    ADC-Elektronik GmbH\n"
+"    Oestingsstrasse 13b\n"
+"    59063 Hamm\n"
+"    info@adc-elektronik.de\n"
+"    +49 2381 91591-0\n"
+"\n"
+"Please mention that you will use it with our OpenERP Module.\n"
+"	\n"
+"If setting the Standard Sign-In Sign-Out Time doesn't work, please ceck the License Number with ADC-Elektronik.\n"
+"    "
+msgstr "    Fetches SignIns/Outs from RFID Office Timer II Terminals via Scheduled Action or manually.\n"
+"Sends the Employees RFID Key and Time to the Terminals.\n"
+"HR Manager Role required for setting up the Terminals.\n"
+"\n"
+"Office Timer II Terminals are available at:\n"
+"\n"
+"    ADC-Elektronik GmbH\n"
+"    Oestingsstrasse 13b\n"
+"    59063 Hamm\n"
+"    info@adc-elektronik.de\n"
+"    +49 2381 91591-0\n"
+"\n"
+"Please mention that you will use it with our OpenERP Module.\n"
+"	\n"
+"If setting the Standard Sign-In Sign-Out Time doesn't work, please ceck the License Number with ADC-Elektronik.\n"
+"    "
+
+#. module: hr_attendance_terminal
+#: sql_constraint:hr.employee:0
+msgid "RFID Key must be unique!"
+msgstr "RFID Key muss unique sein!"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Set Auto Sign In/Out Time"
+msgstr "Set Auto Sign In/Out Time"
+
+#. module: hr_attendance_terminal
+#: constraint:hr.attendance:0
+msgid "Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
+msgstr "Fehler: Anmeldung (oder Abmeldung) sollte auf Abmeldung ( oder Anmeldung) erfolgen."
+
+#. module: hr_attendance_terminal
+#: sql_constraint:hr.attendance.terminal:0
+msgid "Terminal Nr. must be unique!"
+msgstr "Terminal Nr. muss unique sein!"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Terminal Setup"
+msgstr "Terminal Setup"
+
+#. module: hr_attendance_terminal
+#: constraint:hr.employee:0
+msgid "Error ! You cannot create recursive Hierarchy of Employees."
+msgstr "Fehler ! Sie können keine rekursive Hierachie bei Mitarbeitern definieren."
+
+#. module: hr_attendance_terminal
+#: constraint:hr.attendance.terminal:0
+msgid "Please check the Sign Out Hour Value!"
+msgstr "Bitte korrigieren Sie den 'Sign Out Stunde' Wert!"
+
+#. module: hr_attendance_terminal
+#: constraint:hr.attendance.terminal:0
+msgid "Please check the Sign In Hour Value!"
+msgstr "Bitte korrigieren Sie den 'Sign In Stunde' Wert!"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Terminal switches to Sign-Out at:"
+msgstr "Terminal schaltet auf Sign-Out um:"
+
+#. module: hr_attendance_terminal
+#: constraint:hr.employee:0
+msgid "Error ! You cannot select a department for which the employee is the manager."
+msgstr "Fehler ! Sie können keine Abteilung wählen, wo der Mitarbeiter selbst Abteilungsleiter ist."
+
+#. module: hr_attendance_terminal
+#: field:hr.employee,rfid_key:0
+msgid "RFID Key"
+msgstr "RFID Key"
+
+#. module: hr_attendance_terminal
+#: model:ir.model,name:hr_attendance_terminal.model_hr_attendance_terminal
+msgid "hr.attendance.terminal"
+msgstr "hr.attendance.terminal"
+
+#. module: hr_attendance_terminal
+#: constraint:hr.attendance.terminal:0
+msgid "Please check the Sign In Minute Value!"
+msgstr "Bitte korrigieren Sie den 'Sign In Minute' Wert!"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Fetch"
+msgstr "Terminal abfragen"
+
+#. module: hr_attendance_terminal
+#: help:hr.attendance.terminal,tnr:0
+msgid "Input with two digits, e.g. 01"
+msgstr "Eingabe mit zwei Stellen, Bsp. 01"
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,license_nr:0
+msgid "License Number"
+msgstr "Lizenz Code"
+
+#. module: hr_attendance_terminal
+#: view:hr.attendance.terminal:0
+msgid "Create Terminal Users"
+msgstr "User an Terminal senden"
+
+#. module: hr_attendance_terminal
+#: help:hr.attendance.terminal,sign_in_hour:0
+#: help:hr.attendance.terminal,sign_out_hour:0
+msgid "Input with two digits, e.g. 08"
+msgstr "Eingabe mit zwei Stellen, Bsp. 08"
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,ip:0
+msgid "IP Address"
+msgstr "IP Addresse"
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,tnr:0
+msgid "Terminal Number"
+msgstr "Terminal Nr."
+
+#. module: hr_attendance_terminal
+#: field:hr.attendance.terminal,sign_in_hour:0
+msgid "Sign in Hour"
+msgstr "Sign in Stunde"
+

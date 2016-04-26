@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+
+<record id="edit_view_task_form2" model="ir.ui.view">
+            <field name="name">edit.project.task.form</field>
+            <field name="model">project.task</field> 
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+            <h1 position="before">
+              <field name="task_name"/>
+            </h1>
+          </field>
+        </record>
+
+<record id="edit_view_task_search_form" model="ir.ui.view">
+            <field name="name">edit.project.task.search.form</field>
+            <field name="model">project.task</field>
+             <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+              
+               <filter string="Task" position="after">
+                
+                <filter string="Subtask" context="{'group_by':'task_name'}"/>
+                  </filter>
+                </field>
+              </record>
+
+<!-- <record id="edit_view_task_form2" model="ir.ui.view">
+            <field name="name">edit.project.task.form</field>
+            <field name="model">project.task</field> 
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+         <page string="Description" position="after">
+          <page string="Sub-Task">
+            <field name="task_id">
+              <tree editable="bottom">
+                <field name="task_name"/>
+               
+              </tree>
+            </field>
+          </page>
+        </page>
+      </field>
+    </record> -->
+
+
+          <!-- widget="selection" -->
+ 
+  </data>
+</openerp>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+  
+<record model="ir.ui.view" id="gallery_kanban_view">
+    <field name="name">Gallery</field>
+    <field name="model">gallery.gallery</field>
+    <field name="type">kanban</field>
+    <field name="arch" type="xml">
+        <kanban>
+           <field name="image" />
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_employee_vignette">
+                        <div class="oe_employee_image">
+                            <a type="open"><img t-att-src="kanban_image('gallery.gallery', 'image', record.id.value)" class="oe_employee_picture"/></a>
+                        </div>
+                                 
+                                </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+    <!-- actions opening views on models -->
+    
+   
+    
+    <record id="action_gallery_form" model="ir.actions.act_window">
+        <field name="name">Gallery</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gallery.gallery</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+  </record>
+   
+   <menuitem name="Gallery" action="action_gallery_form" id="menu_gallery"
+            parent="hr.menu_hr_configuration" />
+    
+   
+  </data>
+</openerp>

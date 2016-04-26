@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_evaluation_parameter_rating_user,hr_evaluation.parameter.rating.user,model_hr_evaluation_parameter_rating,base.group_hr_user,1,1,1,1
+access_hr_evaluation_parameter_rating_pm,hr_evaluation.parameter.rating.pm,model_hr_evaluation_parameter_rating,base.group_hr_project_manager,1,1,1,1
+access_hr_evaluation_parameter_rating_employee,hr_evaluation.parameter.rating.employee,model_hr_evaluation_parameter_rating,base.group_user,1,1,1,1

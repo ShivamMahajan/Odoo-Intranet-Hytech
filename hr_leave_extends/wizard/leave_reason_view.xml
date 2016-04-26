@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+  	<record id="view_hr_holidays_leave_reason" model="ir.ui.view">
+            <field name="name">hr.holidays.leave.reason.form</field>
+            <field name="model">hr.holidays.leave.reason</field>
+            <field name="arch" type="xml">
+            <form string="Leave Reason">
+                <group>
+                    <field name="leave_reason" />
+                    <field name="state" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="holidays_first_validate" string="Approve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirm')]}"/> 
+
+                    <button name="holidays_validate" string="Validate" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'validate1')]}"/> 
+
+                    <button name="holidays_refuse_reason" string="Refuse" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'refuse')]}"/> 
+
+                     <button name="leave_cancel_reason" string="Cancel Leave" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'cancel')]}"/> or
+
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+
+
+  	<record id="action_hr_holidays_leave_reason" model="ir.actions.act_window">
+            <field name="name">Leave Approval Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.holidays.leave.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+  </data>
+</openerp>

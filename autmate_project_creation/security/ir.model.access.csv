@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_document,project.documents,model_project_documents,project.group_project_user,1,0,0,0
+access_project_document_manager,project.documents,model_project_documents,project.group_project_manager,1,1,1,1
+access_project_cr,project.change.request,model_project_change_request,project.group_project_user,1,0,0,0
+access_project_cr_manager,project.change.request,model_project_change_request,project.group_project_manager,1,1,1,1

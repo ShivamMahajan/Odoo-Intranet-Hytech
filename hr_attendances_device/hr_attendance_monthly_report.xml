@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <report id="report_monthly_attendance_device_summary"
+                string="Monthly Attendance Summary"
+                model="hr_attendance.record.report"
+                name="hr_attendance.monthly.summary"
+                xsl="hr_attendances_device/report/hr_attendance_monthly_summary.xsl"
+                auto="False"
+                menu="False"/>
+
+    </data>
+</openerp>
+

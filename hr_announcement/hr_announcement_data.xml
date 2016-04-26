@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+    	<record model="ir.config_parameter" id="hr_announcement_config">
+    		<field name="key">hr.announcement.email</field>
+            <field name="value">hytechproerp@gmail.com</field>
+        </record>
+
+	</data>
+</openerp>

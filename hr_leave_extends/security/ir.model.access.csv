@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_model_leave_mechanism_manager,leave.mechanism manager,model_leave_mechanism,base.group_hr_manager,1,0,0,0
+access_model_leave_mechanism_user,leave.mechanism user,model_leave_mechanism,base.group_user,1,0,0,0
+access_model_leave_mechanism_project_manager,leave.mechanism project_manager,model_leave_mechanism,base.group_hr_project_manager,1,0,0,0
+
+access_leave_mechanism_line manager,leave_mechanism_line manager,model_leave_mechanism_line,base.group_hr_manager,1,1,1,1
+access_leave_mechanism_line user,leave_mechanism_line user,model_leave_mechanism_line,base.group_user,1,1,0,0
+
+access_hr_holidays_pm,hr.holidays.pm,model_hr_holidays,base.group_hr_project_manager,1,1,1,1
+access_hr_holidays_hrm,hr.holidays.hrm,model_hr_holidays,base.group_hr_manager,1,1,1,1
+access_hr_holidays_hro,hr.holidays.hro,model_hr_holidays,base.group_hr_user,1,1,1,1
+access_hr_holidays_employee,hr.holidays.employee,model_hr_holidays,base.group_user,1,1,1,1

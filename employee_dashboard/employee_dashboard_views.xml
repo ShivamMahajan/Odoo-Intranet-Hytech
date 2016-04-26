@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+    	 <record id="view_leave_analysis_employee_dashboard_graph" model="ir.ui.view">
+           <field name="name">hr.holidays.analysis.graph1</field>
+            <field name="model">hr.holidays</field>
+           <field name="priority" eval="32"/>
+            <field name="arch" type="xml">
+                <graph string="Monthly Leave Analysis" type="pie">
+                    <field name="number_of_days" type="measure"/>
+                    <field name="holiday_status_id"/>
+                </graph> 
+            </field>
+        </record>
+
+    	 <record id="action_leave_analysis_employee_dashboard" model="ir.actions.act_window">
+           <field name="name">Leave Analysis</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('state','in',['validate1','validate']),('user_id','=',uid),('type','=','remove')]</field>
+            <field name="view_id" ref="view_leave_analysis_employee_dashboard_graph"/>
+        </record>
+
+        <record id="action_evaluation_report_all" model="ir.actions.act_window">
+        <field name="name">Appraisal Analysis</field>
+        <field name="res_model">hr.evaluation.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph</field>
+        <field name="context">{'search_default_year':1,'search_default_month':1,'search_default_employee':1,'group_by_no_leaf':1,'group_by':[]}</field>
+        <field name="search_view_id" ref="view_evaluation_report_search"/>
+    </record>
+
+    <record id="action_view_task_history_cumulative" model="ir.actions.act_window">
+            <field name="name">Cumulative Flow</field>
+            <field name="res_model">project.task.history.cumulative</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_task_history_graph"/>
+            <field name="filter" eval="False"/>
+            <field name="context">{"search_default_open":1, "search_default_this_month": 1}</field>
+        </record>
+
+         <record id="view_task_history_graph" model="ir.ui.view">
+            <field name="name">project.task.history.cumulative.graph</field>
+            <field name="model">project.task.history.cumulative</field>
+            <field name="arch" type="xml">
+                <graph string="Project Tasks" type="bar" stacked="True">
+                    <field name="type_id" type="row"/>
+                    <field name="kanban_state" type="row"/>
+                    <field name="date" interval="month" type="col"/>
+                    <field name="nbr_tasks" type="measure"/>
+                    <field name="planned_hours" type="measure"/>
+                    <field name="remaining_hours" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <!--  <record id="view_turnover_by_month_tree" model="ir.ui.view">
+            <field name="name">turnover.by.month.tree</field>
+            <field name="model">account.invoice.report</field>
+            <field name="priority" eval="32"/>
+            <field name="arch" type="xml">
+                <tree string="Monthly Turnover">
+                    <field name="month"/>
+                    <field name="price_total"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_turnover_by_month_graph" model="ir.ui.view">
+            <field name="name">turnover.by.month.graph</field>
+            <field name="model">account.invoice.report</field>
+            <field name="priority" eval="32"/>
+            <field name="arch" type="xml">
+                <graph string="Monthly Turnover" type="bar">
+                    <field name="month"/>
+                    <field name="price_total" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_turnover_by_month">
+            <field name="name">Monthly Turnover</field>
+            <field name="res_model">account.invoice.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_id" ref="view_turnover_by_month_graph"/>
+            <field name="domain">[('year','ilike',time.strftime('%Y')),('user_id','=',uid)]</field>
+            <field name="context">{'group_by_no_leaf':1,'group_by':['month']}</field>
+        </record>-->
+
+        <record id="board_my_dash_view_inherit" model="ir.ui.view">
+            <field name="name">board.employee.form_inherit</field>
+            <field name="model">board.board</field>
+            <field name="inherit_id" ref="board.board_my_dash_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/board/column" position="inside">
+                    <action name="%(action_leave_analysis_employee_dashboard)d" string="Monthly Leave Analysis"/>
+                </xpath>
+               
+            </field>
+        </record>
+
+       
+    </data>
+
+</openerp>

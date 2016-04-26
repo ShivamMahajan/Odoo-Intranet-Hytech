@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+	<!-- Adding Pin Number and Card Number in Employee Form -->
+    <record id="hr_employee_view_form_device" model="ir.ui.view">
+            <field name="name">hr.employee.view.form_device</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">  
+                <xpath expr="//notebook/page[@string='Personal Information']/group/group[@string='Birth']" position="after">  
+                    <group string="Attendance Device Info">
+                            <field name="pin_number"/>
+                            <field name="card_number"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+    <!-- Adding Pin Number and Card Number in Attendance Form -->
+    <record id="view_attendance_form_device" model="ir.ui.view">
+            <field name="name">hr.attendance.form_device</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_form"/>
+            <field name="arch" type="xml">       
+                <field name="action_desc" position="after">
+                        <field name="pin_number"/>
+                        <field name="card_number"/>
+                        <field name="verified_mode"/>
+                </field>
+            </field>
+        </record>
+
+    <!-- Adding Pin Number and Card Number in Attendance Tree view  -->
+    <record id="view_attendance_tree_device" model="ir.ui.view">
+            <field name="name">hr.attendance.tree_device</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_who"/>
+            <field name="arch" type="xml">       
+                <field name="action" position="after">
+                        <field name="pin_number"/>
+                        <field name="card_number"/>
+                        <field name="verified_mode"/>
+                </field>
+            </field>
+        </record>
+
+    <!-- ZK Device Tree View -->
+	<record id="view_attendance_who" model="ir.ui.view">
+            <field name="name">hr.attendance.device.form</field>
+            <field name="model">hr.attendance.device</field>
+            <field name="arch" type="xml">
+                <tree string="ZkDevice Configuration">
+                    <field name="name"/>
+                    <field name="device_ip"/>
+                    <field name="device_port"/>
+                    <field name="device_number"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+	 <!--Zk Device form view -->
+        <record id="view_zkdevice_configuration" model="ir.ui.view">
+            <field name="name">hr.attendance.device.form</field>
+            <field name="model">hr.attendance.device</field>
+            <field name="arch" type="xml">
+                <form string="ZK Device">
+                    <header>
+                        <button name="check_device_connection" string="Check Connection" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="device_number"/>
+							</group>
+							<group>
+								<field name="device_ip"/>
+								<field name="device_port"/> 
+							</group>
+							<group>
+								<field name="timezone"/> 
+                                <field name="active"/>
+							</group>
+						</group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+		<!--Zk Device Actions -->
+		<record id="open_view_zkdevice_configuration" model="ir.actions.act_window">
+            <field name="name">ZKDevice Configuration</field>
+            <field name="res_model">hr.attendance.device</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a ZK Device.
+              </p>
+            </field>
+        </record>
+		
+	 <menuitem action="open_view_zkdevice_configuration" id="menu_open_view_zkdevice_configuration" sequence="20" parent="hr.menu_hr_configuration"/>
+
+
+     <!-- ZkDownloader Form View -->
+    <record id="view_zkdevice_downloader" model="ir.ui.view">
+            <field name="name">ZkSoftware Downloader</field>
+            <field name="model">zksoftware.downloader</field>
+            <field name="arch" type="xml">
+            <form string="ZkSoftware Downloader">
+               <group string="DownLoad Options"/>
+                    <group string="Choose Devices">
+                        <field name="device_configuration" nolabel="1" edit="false"/>
+                    </group>
+                <group>
+                    <group>
+                        <field name="all_employee" attrs="{'invisible':[('filter_date', '=', True)]}"/>
+                        <field name="filter_date" attrs="{'invisible':[('all_employee', '=', True)]}"/>
+                    </group>
+                    <group colspan="4" attrs="{'invisible':[('filter_date', '!=', True)]}">
+                        <field name="date_from" attrs="{'required':[('filter_date', '=', True)]}"/>
+                        <field name="date_to" attrs="{'required':[('filter_date', '=', True)]}"/>
+                    </group>
+                </group>
+                    <group string="Employees" attrs="{'invisible':['|',('all_employee', '=', True),('filter_date', '=', True)]}"> 
+                        <field name="employee_id" nolabel="1" widget="many2many" options="{'create': False}"/>
+                    </group>
+                <footer>
+                    <button name="download_device_record" string="Download" type="object" default_focus="1" class="oe_highlight"/>
+                    or 
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Zk DownLoader Action-->
+     <record id="open_view_zkdevice_downloader" model="ir.actions.act_window">
+            <field name="name">ZkSoftware Downloader</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zksoftware.downloader</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_zkdevice_downloader"/>
+        </record>
+        
+     <menuitem action="open_view_zkdevice_downloader" id="menu_open_view_zkdevice_downloader" sequence="21" parent="hr_attendance.menu_hr_attendance" groups="base.group_system"/>
+
+     <!-- Attendance New Format Search View -->
+     <record model="ir.ui.view" id="view_hr_attendance_record_report_filter">
+            <field name="name">view_hr_attendance_record_report_filter</field>
+            <field name="model">hr_attendance.record.report</field>
+            <field name="arch" type="xml">
+                <search string="Hr Attendance Record Report Search">
+                    <field name="name" string="Attendance"/>
+                    <filter string="Today" name="today" domain="[('name','&gt;=',current_date),('name','&lt;=',current_date)]" />
+                    <filter string="Current Month" domain="[('name','&gt;=', datetime.datetime.now().strftime('%Y-%m-01'))]" />
+                    <separator/>
+                    <filter string="My Attendance" domain="[('employee_id.user_id.id', '=', uid)]" />
+                    <field name="employee_id"/>
+                    <group expand="0" string="Group By">
+                        <filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                        <separator/>
+                        <filter name="groupby_name" string="Month" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+      <!-- Attendance New Format Tree View -->
+     <record id="view_attendance_record_report_tree" model="ir.ui.view">
+            <field name="name">hr_attendance.record.report.tree</field>
+            <field name="model">hr_attendance.record.report</field>
+            <field name="arch" type="xml">
+                <tree string="Daily Attendance Tree">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="sign_in"/>
+                    <field name="sign_out"/>
+                    <field name="total_duration" sum="Total time" widget="float_time"/>
+                </tree>
+            </field>
+        </record>
+
+      <!-- Attendance New Format Form View -->
+     <record id="view_attendance_record_report_form" model="ir.ui.view">
+            <field name="name">Daily Attendances Form</field>
+            <field name="model">hr_attendance.record.report</field>
+            <field name="arch" type="xml">
+            <form string="Daily Attendance Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="sign_in"/>
+                            <field name="sign_out" on_change="onchange_signout(sign_in,sign_out)"/>
+                            <field name="total_duration" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <!-- Attendance New Format Action-->
+     <record id="open_view_attendance_record_report" model="ir.actions.act_window">
+            <field name="name">Daily Attendances</field>
+            <field name="res_model">hr_attendance.record.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_today":1}</field>
+            <field name="search_view_id" ref="view_hr_attendance_record_report_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                The Time Tracking functionality aims to manage employee attendances from Sign in/Sign out actions.
+              </p>
+            </field>
+        </record>
+        
+     <menuitem action="open_view_attendance_record_report" id="menu_open_view_attendance_record_report" sequence="30" parent="hr_attendance.menu_hr_attendance"/>
+
+     <!-- Company Public Holidays Search View -->
+     <record model="ir.ui.view" id="view_company_public_holidays_filter">
+            <field name="name">view_company_public_holidays_filter</field>
+            <field name="model">company.public.holidays</field>
+            <field name="arch" type="xml">
+                <search string="Public Holidays Search">
+                    <field name="name" string="Public Holidays"/>
+                    <filter string="Current Year" name="year" domain="[('record_year','=', datetime.datetime.now().strftime('%Y'))]" />
+                    <separator/>
+                    <group expand="0" string="Group By">
+                       <filter name="groupby_year" string="Year" context="{'group_by':'record_year'}"/>
+                        <separator/>
+                        <filter name="groupby_name" string="Month" context="{'group_by':'holiday_day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+     <!-- Company Public Holidays Tree View -->
+     <record id="view_company_public_holidays_tree" model="ir.ui.view">
+            <field name="name">company.public.holidays.tree</field>
+            <field name="model">company.public.holidays</field>
+            <field name="arch" type="xml">
+                <tree string="Public Holiday Tree">
+                    <field name="name"/>
+                    <field name="holiday_day"/>
+                    <field name="holiday_weekday"/>
+                    <field name="record_year" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+
+      <!-- Company Public Holidays  Form View -->
+     <record id="view_company_public_holidays_form" model="ir.ui.view">
+            <field name="name">Public Holiday Form</field>
+            <field name="model">company.public.holidays</field>
+            <field name="arch" type="xml">
+            <form string="Public Holiday Form">
+                <sheet>
+                    <group>
+                        <field name="company_ids" widget="many2many_tags" groups="base.group_system"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="holiday_day" on_change="onchange_holiday_day(holiday_day)"/>
+                        </group>
+                        
+                    </group>
+                    <group>
+                            <field name="holiday_weekday"/>
+                            <field name="record_year" invisible="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+     <!-- Company Public Holidays Actions-->
+     <record id="open_view_company_public_holidays" model="ir.actions.act_window">
+            <field name="name">Public Holidays</field>
+            <field name="res_model">company.public.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_year":1}</field>
+            <field name="search_view_id" ref="view_company_public_holidays_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Create a List of Public Holdays Of Current Year.
+              </p>
+            </field>
+        </record>
+        
+     <menuitem action="open_view_company_public_holidays" id="menu_open_view_company_public_holidays" sequence="40" parent="hr_holidays.menu_open_ask_holidays"/>
+		
+	</data>
+
+
+    <!-- Cron Job To fetch Attendance Record -->
+    <data noupdate="0">
+        <record forcecreate="True" id="ir_cron_fetch_attendance_log" model="ir.cron">
+            <field name="name">Fetch Attendance Log From ZkSoftware </field>
+            <field eval="True" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field eval="'zksoftware.downloader'" name="model" />
+            <field eval="'run_attendance_log_from_device'" name="function" />
+            <field eval="'()'" name="args" />
+        </record>
+
+        <record forcecreate="True" id="ir_cron_attendance_record_report_data" model="ir.cron">
+            <field name="name">Create Attendance Record From Attedance</field>
+            <field eval="True" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="'hr_attendance.record.report'" name="model" />
+            <field eval="'run_attendance_record_report_data'" name="function" />
+            <field eval="'()'" name="args" />
+        </record>
+
+        <record model="ir.config_parameter" id="window_server_host_url_dynamic">
+            <field name="key">window.server.host_url</field>
+            <field name="value">http://192.168.0.238:8000</field>
+        </record>
+
+        <record model="ir.config_parameter" id="window_server_host_unsuccessful_connection_email">
+            <field name="key">window.server.unsuccessful_connection.email_id</field>
+            <field name="value">m</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+    	<record id="property_rule_personal_record_hr_member" model="ir.rule">
+            <field name="name">Manager Personal Record</field>
+            <field name="model_id" ref="model_hr_employee_personal_info"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_hr_manager'))]"/>
+        </record>
+        <record id="property_rule_personal_record_hr_employee" model="ir.rule">
+            <field name="name">Employee Personal Record</field>
+            <field name="model_id" ref="model_hr_employee_personal_info"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('base.group_user')), (4,ref('base.group_hr_project_manager')),(4,ref('base.group_hr_user'))]"/>
+        </record>
+
+        <!-- Multi Company Rule -->
+
+        <record id="hr_employee_personal_information_multi_comp_rule" model="ir.rule">
+            <field name="name">Employee personal Information multi company rule</field>
+            <field name="model_id" ref="model_hr_employee_personal_info"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('user_id.company_id','=',False),('user_id.company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+    </data>
+</openerp>

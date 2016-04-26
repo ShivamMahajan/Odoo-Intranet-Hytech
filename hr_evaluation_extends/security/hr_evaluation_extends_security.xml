@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+	<record id="hr_evaluation_appraisal_rating_comp_rule" model="ir.rule">
+        <field name="name">Evaluation Appraisal Rating multi company rule</field>
+        <field name="model_id" ref="model_hr_evaluation_parameter_rating"/>
+        <field eval="True" name="global"/>
+        <field name="domain_force">['|',('user_id.company_id','=',False),('user_id.company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="hr_employee_appraisal_rating" model="ir.rule">
+        <field name="name">Employee Appraisal Rating</field>
+        <field ref="model_hr_evaluation_parameter_rating" name="model_id"/>
+        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        <field eval="False" name="global"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="hr_employee_appraisal_rating_project_manager" model="ir.rule">
+        <field name="name">Appraisal Rating Project Manager</field>
+        <field name="model_id" ref="model_hr_evaluation_parameter_rating"/>
+        <field name="domain_force">[('employee_id', 'child_of', [user.employee_ids[0].id])]</field>
+        <field eval="False" name="global"/>
+        <field name="groups" eval="[(4,ref('base.group_hr_project_manager'))]"/>
+    </record>
+
+     <record id="hr_employee_appraisal_rating_hr_officer" model="ir.rule">
+        <field name="name">Appraisal Rating Hr Officer</field>
+        <field name="model_id" ref="model_hr_evaluation_parameter_rating"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field eval="False" name="global"/>
+        <field name="groups" eval="[(4,ref('base.group_hr_user'))]"/>
+    </record>
+
+	</data>
+</openerp>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>   
+        <record id="view_users_form" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Access Rights']" position="after">
+                    <page string="Oauth">
+                        <group>
+                            <field name="oauth_provider_id"/>
+                            <field name="oauth_uid"/>
+                            <field name="oauth_access_token"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_company_form" model="ir.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/field[@name='parent_id']" position="after">
+                    <field name="email_domain"/>
+                    <group>
+                        <field name="apply_leave_policy" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='sale_ok']" position="after">
+                    <field name="use_for_timesheet"/>
+                    <label for="use_for_timesheet"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

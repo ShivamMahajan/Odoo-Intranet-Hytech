@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_attendance_record_report_hr,hr_attendance.record.report.hr,model_hr_attendance_record_report,base.group_hr_user,1,0,0,0
+access_hr_attendance_record_report_employee,hr_attendance.record.report_employee,model_hr_attendance_record_report,base.group_user,1,0,0,0
+access_hr_attendance_record_report_pm,hr_attendance.record.report_pm,model_hr_attendance_record_report,base.group_hr_project_manager,1,0,0,
+
+access_company_public_holidays_pm,company.public.holidays_pm,model_company_public_holidays,base.group_hr_project_manager,1,0,0,0
+access_company_public_holidays_employee,company.public.holidays_employee,model_company_public_holidays,base.group_user,1,0,0,0
+access_company_public_holidays_hr,company.public.holidays_hr,model_company_public_holidays,base.group_hr_user,1,1,1,1
+access_hr_attendance_device_manager,hr_attendance_device manager,model_hr_attendance_device,base.group_hr_manager,1,1,1,1

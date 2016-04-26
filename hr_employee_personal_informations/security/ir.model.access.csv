@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_personal_record_officer,hr_employee_personal_record.officer,model_hr_employee_personal_info,base.group_hr_user,1,1,1,0
+access_hr_employee_personal_record_manager,hr_employee_personal_record.manager,model_hr_employee_personal_info,base.group_hr_manager,1,1,1,0
+access_hr_employee_personal_record_pmanager,hr_employee_personal_record.pmanager,model_hr_employee_personal_info,base.group_hr_project_manager,1,0,0,0
+access_hr_employee_personal_record_user,hr_employee_personal_record.user,model_hr_employee_personal_info,base.group_user,1,0,0,0
+
+

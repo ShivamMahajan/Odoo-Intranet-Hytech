@@ -1,0 +1,1 @@
+import hr_attendance_monthly_summary_wizards

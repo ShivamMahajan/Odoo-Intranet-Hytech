@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- Project Form For Sale Form Button-->
+<record model="ir.ui.view" id="project_creation_form_sale">
+            <field name="name">project.creation.form.sale</field>
+            <field name="model">project.project</field>
+             <field name="priority" eval="18"/>
+            <field name="arch" type="xml">
+        <form string="Automate Project">
+            <sheet string="Project Creation">
+               <div class="oe_title">
+                    <div name="options_active">
+                         <field name="use_tasks" class="oe_inline"/>
+                            <label for="use_tasks" string="Use Tasks"/>
+                             <field name="use_issues" class="oe_inline"/>
+                            <label for="use_issues" string="Use Issues"/>
+                    </div>
+                       
+                         <label for="name" class="oe_edit_only" string="Project Name" />
+                        <h1>
+                            <field name="name" string="Project Name"/>
+                            
+                        </h1>
+                        
+                    </div>
+                    <group>
+                        <group col="4">
+                            <field name="user_id" string="Project Manager" />
+                            <newline/>
+                            <field name="partner_id" on_change="onchange_partner_id(partner_id)" string="Customer"/>
+                        </group>
+                    </group>
+                  <notebook>
+                        <page string="Related Documents" name="document">  
+                            <field name="pd_id">
+                                <tree string="Project Related Document" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="attached_document"/>
+                                </tree>
+                            </field>
+                        </page>
+                      
+                    </notebook>
+                </sheet> 
+               
+            </form>
+            </field>
+    </record>
+
+    <record id="action_project_creation_form_sale" model="ir.actions.act_window">
+            <field name="name">Create Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.project</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="project_creation_form_sale"/>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+
+<!-- Added Change Request Tree-->
+<record id="view_change_request_tree" model="ir.ui.view">
+            <field name="name">project.change.request.tree</field>
+            <field name="model">project.change.request</field>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <tree string="Change Request">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="create_date"/>
+                    <field name="start_date"/>
+                    <field name="end_date" />
+                    <field name="project_id"/>
+                    <!--<field name="total_revenue"/>-->
+                    <field name="related_sale_order" groups="base.group_sale_salesman"/>
+                    <field name="customer_id" invisible="1"/>
+                    <field name="user_ids" invisible="1"/>
+                </tree>
+            </field>
+</record>
+
+<!-- Added Change Request Form-->
+<record model="ir.ui.view" id="change_request_form">
+    <field name="name">project.change.request.form</field>
+    <field name="model">project.change.request</field>
+    <field name="arch" type="xml">
+    <form string="Change Request">
+        <sheet>
+            <group>
+                <group>
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="create_date" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                </group>
+                <group>
+                   <!-- <field name="total_revenue" />-->
+                    <field name="project_id" />
+                    <field name="related_sale_order" groups="base.group_sale_salesman"/>
+                    <field name="customer_id" />
+                    <field name="user_ids" invisible="1"/>
+                </group>
+
+            </group>
+        </sheet>
+    </form>
+    </field>
+</record>
+
+<!-- Added Change Request Filter-->
+ <record id="view_change_request_filter" model="ir.ui.view">
+            <field name="name">project.change.request.select</field>
+            <field name="model">project.change.request</field>
+            <field name="arch" type="xml">
+                <search string="Search Change Request">
+                    <field name="customer_id" operator="child_of"/>
+                    <field name="user_ids"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Project Manager" domain="[]" context="{'group_by':'user_ids'}"/>
+                        <filter string="Customer" domain="[]" context="{'group_by':'customer_id'}"/>
+                        <filter string="Projects" domain="[]" context="{'group_by':'project_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+<!-- Added Change Request Actions-->
+<record id="action_change_request_form_sale" model="ir.actions.act_window">
+            <field name="name">Change Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.change.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Change requests
+              </p>
+            </field>
+        </record>
+
+
+
+<!--View for CR sale form -->
+ <record id="view_sale_add_cr" model="ir.ui.view">
+            <field name="name">Adding Change Request</field>
+            <field name="model">add.sale.cr</field>
+            <field name="arch" type="xml">
+                <form string="CR Sale Order">
+                    <p class="oe_grey">
+                        Select your existing project in order to add Change requests.
+                    </p>
+                    <group>
+                        <field name="project_exist" class="oe_inline"/>
+                    </group>
+                    
+                    <footer>
+                        <button name="open_project" string="Add CR" type="object"
+                            context="{'project_exist': project_exist}" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_sale_add_cr" model="ir.actions.act_window">
+            <field name="name">Add CR</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">add.sale.cr</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+<!--Adding Button on Sale Order Form when Sale Order is confirmed -->
+    <record model="ir.ui.view" id="view_order_form_project_button">
+            <field name="name">sale.order.project.button</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[@name='cancel']" position="after">
+                       <button name="open_project_form" string="Create Project"  type="object" states="manual,progress" class="oe_highlight" context="{'change_request_type':change_request_type,'partner_id':partner_id,'id':id}"/>
+                         
+                </xpath>
+                <xpath expr="//sheet/notebook/page[@string='Other Information']/group/group/field[@name='invoiced']" position="after">
+                    <field name="change_request_type" readonly="1"/>
+                </xpath>
+                
+            </field>
+    </record>
+
+<!-- Extend Search of Sale order -->
+    <record model="ir.ui.view" id="view_order_filter_extends_cr">
+            <field name="name">sale.order.filter.extend.cr</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                 <xpath expr="/search/group/filter[@string='Order Month']" position="after">
+                    <filter string="Change Request" domain="[]" context="{'group_by':'change_request_type'}"/>
+
+                </xpath>
+            </field>
+
+    </record>
+
+<!--Adding Change request Field in Customer Invoice Form  -->
+    <record model="ir.ui.view" id="view_change_request_invoice_form">
+            <field name="name">account.invoice.cr.field</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/notebook/page[@string='Other Info']/group/group/field[@name='move_id']" position="after">
+                    <field name="change_request_type" readonly="1"/>
+                </xpath>
+                
+            </field>
+    </record>
+
+
+<!-- Extend Search of Customer Invoice -->
+    <record model="ir.ui.view" id="view_invoice_filter_extends_cr">
+            <field name="name">account.invoice.filter.extend.cr</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                 <xpath expr="/search/group/filter[@string='Due Month']" position="after">
+                    <filter string="Change Request" domain="[]" context="{'group_by':'change_request_type'}"/>
+
+                </xpath>
+            </field>
+
+    </record>
+
+
+<!-- Action for change Request Button in Customer Form -->
+<record id="act_res_partner_2_change_request" model="ir.actions.act_window">
+            <field name="name">Change Request</field>
+            <field name="res_model">project.change.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_customer_id': active_id}</field>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to View a Change requests
+              </p>
+            </field>
+    </record>
+
+
+
+<!-- Show Count of change request related to Customer -->
+ <record id="res_partner_view_buttons_cr" model="ir.ui.view">
+            <field name="name">res.partner.view.buttons.cr</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20"/>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button class="oe_inline oe_stat_button" type="object" name="land_to_quotation_form" context="{'id':id, 'change_request_type':'CR'}"
+                        attrs="{'invisible': [('customer', '=', False)]}"
+                        icon="fa-tasks">
+                        <field string="CR/Quotation" name="change_request_count" widget="statinfo"/>
+                    </button>     
+                </xpath>
+            </field>
+        </record>
+       
+
+
+
+
+<!--- Adding Document and Change request Page in Original Project Form-->
+
+<record model="ir.ui.view" id="edit_project_extends_new">
+            <field name="name">edit.project.extends.new</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="groups_id" eval="[(4, ref('project.group_project_manager'))]"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                         <page string="Related Documents" name="document">  
+                            <field name="pd_id">
+                                <tree string="Project Related Document" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="attached_document"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Change Requests" name="cr">
+                            <field name="pcr_id">
+                                <tree string="Change Request" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="create_date"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="related_sale_order"/>
+                                   <!-- <field name="total_revenue"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                </notebook>
+            </field>
+    </record>
+
+    </data>
+</openerp>
