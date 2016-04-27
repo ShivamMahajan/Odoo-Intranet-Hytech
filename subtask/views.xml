@@ -27,6 +27,17 @@
                 </field>
               </record>
 
+
+<record model="ir.module.category" id="module_my_gourp_category">
+        <field name="name">My Group Category</field>
+        <field name="description">Group Description.</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="my_group" model="res.groups">
+    <field name="name">My Group</field>
+    <field name="category_id" ref="module_my_gourp_category"/>
+</record>
 <!-- <record id="edit_view_task_form2" model="ir.ui.view">
             <field name="name">edit.project.task.form</field>
             <field name="model">project.task</field> 

@@ -2,26 +2,47 @@
 <openerp>
   <data>
   
+
+  
+
 <record model="ir.ui.view" id="gallery_kanban_view">
     <field name="name">Gallery</field>
     <field name="model">gallery.gallery</field>
-    <field name="type">kanban</field>
+<!--     <field name="type">kanban</field> -->
     <field name="arch" type="xml">
         <kanban>
-           <field name="image" />
+
+           
             <templates>
                 <t t-name="kanban-box">
-                    <div class="oe_employee_vignette">
-                        <div class="oe_employee_image">
-                            <a type="open"><img t-att-src="kanban_image('gallery.gallery', 'image', record.id.value)" class="oe_employee_picture"/></a>
+                    <div class="gallery_employee_vignette">
+                        <div class="gallery_employee_image">
+                           <ul><li><!-- <a type="open"> --><img t-att-src="kanban_image('gallery.gallery', 'image', record.id.value)" class="gallery_employee_picture"/><!-- </a> --></li></ul>
                         </div>
                                  
                                 </div>
                         </t>
+                        
                     </templates>
+
                 </kanban>
             </field>
         </record>
+
+    <record model="ir.ui.view" id="gallery_form_view">
+    <field name="name">Gallery</field>
+    <field name="model">gallery.gallery</field>
+    <field name="arch" type="xml">    
+                <form string="Image">
+
+
+                        <field name="image" widget='image' string="Upload Image"/>
+                     
+                            </form>
+                        </field>
+                    </record>
+
+
 
 
     <!-- actions opening views on models -->

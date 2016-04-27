@@ -1,4 +1,4 @@
-.oe_employee_vignette {
+.gallery_employee_vignette {
   padding: 8px 8px;
   min-height: 100px;
 }
@@ -8,11 +8,11 @@
   vertical-align: top;
 }
 
-.oe_employee_image {
+.gallery_employee_image {
   display: inline-block;
   vertical-align: top;
-  width: 100px;
-  height: 100px;
+  width: 500px!important;
+  height: 500px!important;
   text-align: center;
   overflow: hidden;
   -moz-border-radius: 3px;
@@ -27,15 +27,20 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-.oe_employee_picture {
-  width: 100px;
-  height: 100px;
+.gallery_employee_picture {
+  width: 500px;
+  height: 500px;
   clip: rect(10px, 100px, 110px, 0px);
 }
 
-.oe_employee_picture_wide {
+.gallery_employee_picture_wide {
   height: 100px;
   width: auto;
   clip: rect(0px, 115px, 100px, 15px);
 }
 
+.gallery_employee_picture {
+    width: 500px!important;
+    height: 500px!important;
+    clip: rect(10px, 100px, 110px, 0px);
+}

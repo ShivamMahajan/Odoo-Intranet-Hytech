@@ -25,13 +25,11 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        
         'views.xml',
-        'templates.xml',
-        'views/hr.xml',
+       'gallery_template_view.xml',
+        
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo.xml',
-    ],
-    'qweb': [ 'static/src/xml/suggestions.xml' ],
+   
+    # 'qweb': [ 'static/src/xml/suggestions.xml' ,'static/src/css/hr.css'],
 }
