@@ -8,7 +8,6 @@
 <record model="ir.ui.view" id="gallery_kanban_view">
     <field name="name">Gallery</field>
     <field name="model">gallery.gallery</field>
-<!--     <field name="type">kanban</field> -->
     <field name="arch" type="xml">
         <kanban>
 
@@ -17,7 +16,7 @@
                 <t t-name="kanban-box">
                     <div class="gallery_employee_vignette">
                         <div class="gallery_employee_image">
-                           <ul><li><!-- <a type="open"> --><img t-att-src="kanban_image('gallery.gallery', 'image', record.id.value)" class="gallery_employee_picture"/><!-- </a> --></li></ul>
+                           <ul><li><a type="open"><img t-att-src="kanban_image('gallery.gallery', 'image', record.id.value)" class="gallery_employee_picture"/></a></li></ul>
                         </div>
                                  
                                 </div>
@@ -34,15 +33,78 @@
     <field name="model">gallery.gallery</field>
     <field name="arch" type="xml">    
                 <form string="Image">
-
-
                         <field name="image" widget='image' string="Upload Image"/>
-                     
                             </form>
                         </field>
                     </record>
 
 
+
+<!-- Gallery Filesystem -->
+<!-- <record model="ir.ui.view" id="gallery_kanban_view">
+    <field name="name">Gallery</field>
+    <field name="model">ir.attachment</field>
+    <field name="arch" type="xml">
+        <kanban> -->
+
+           
+          <!--   <templates>
+                <t t-name="kanban-box">
+                    <div class="gallery_employee_vignette">
+                        <div class="gallery_employee_image">
+                           <ul><li><a type="open"><img t-att-src="kanban_image('ir.attachment', 'datas', record.id.value)" class="gallery_employee_picture"/></a></li></ul>
+                        </div>
+                                 
+                                </div>
+                        </t>
+                        
+                    </templates>
+
+                </kanban>
+            </field>
+        </record>
+ -->
+   <!--  <record model="ir.ui.view" id="gallery_form_view">
+    <field name="name">Gallery</field>
+    <field name="model">ir.attachment</field>
+    <field name="arch" type="xml">    
+       -->          <!-- <form string="Image">
+                        <field name="image" widget='image' string="Upload Image"/>
+                            </form> -->
+            <!--                 <form string="Attachments">
+                   <sheet>
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group string="Data">
+                            <field name="type"/>
+                            <field name="datas" filename="datas_fname" attrs="{'invisible':[('type','=','url')]}"/>
+                            <field name="datas_fname" invisible="1" attrs="{'invisible':[('type','=','url')]}" class="oe_inline oe_right"/>
+                            <field name="url" widget="url" attrs="{'invisible':[('type','=','binary')]}"/>
+                        </group>
+                        <group string="Attached To">
+                            <field name="res_model"/>
+                            <field name="res_id"/>
+                            <field name="res_name"/>
+                            <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                        </group>
+                        <group groups="base.group_no_one" string="History">
+                            <label for="create_uid" string="Creation"/>
+                            <div name="creation_div">
+                                <field name="create_uid" readonly="1" class="oe_inline"/> on 
+                                <field name="create_date" readonly="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group name="description_group" string="Description" colspan="4">
+                            <field name="description" nolabel="1"/>
+                        </group>
+                    </group>
+                  </sheet>
+                </form>
+                        </field>
+                    </record> -->
 
 
     <!-- actions opening views on models -->
@@ -55,10 +117,14 @@
         <field name="res_model">gallery.gallery</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
+       
   </record>
    
    <menuitem name="Gallery" action="action_gallery_form" id="menu_gallery"
             parent="hr.menu_hr_configuration" />
+<!-- 
+    <menuitem name="Gallery Filesystem" action="action_gallery_form" id="menu_gallery"
+            parent="hr.menu_hr_configuration" /> -->
     
    
   </data>
