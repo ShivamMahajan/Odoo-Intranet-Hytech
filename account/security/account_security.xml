@@ -179,20 +179,20 @@
 </data>
 
 <data noupdate="0">
-
+<!-- 
     <record model="ir.rule" id="sale_manager_will_see_own_invoice_rule">
         <field name="name">Sale Manager will See Own Invoice</field>
         <field name="model_id" ref="model_account_invoice"/>
         <field name="domain_force">['|',('user_id','=',user.id),('employee_id', 'child_of', [user.employee_ids[0].id])]</field>
          <field name="groups" eval="[(4, ref('base.group_sale_manager_salesman'))]"/>
     </record>
-
-    <record id="account_analysis_manager_report_see_own" model="ir.rule">
+ -->
+ <!--    <record id="account_analysis_manager_report_see_own" model="ir.rule">
         <field name="name">Sale Manager Own Invoices Analysis</field>
         <field ref="model_account_invoice_report" name="model_id"/>
         <field name="domain_force">[('user_id','=',user.id)]</field>
         <field name="groups" eval="[(4, ref('base.group_sale_manager_salesman'))]"/>
-    </record>
+    </record> -->
    <!-- <record model="ir.rule" id="sale_manager_will_see_own_invoice_line_rule">
         <field name="name">Sale Manager will See Own Invoice Line</field>
         <field name="model_id" ref="model_account_invoice_line"/>

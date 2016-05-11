@@ -134,7 +134,7 @@ class hr_employee (osv.osv):
 		else:
 			hr_employee_personal_browse = hr_employee_personal_info_obj.browse(cr,uid,hr_employee_personal_search, context=context )
 			hr_employee_personal_info_obj.write(cr, uid, hr_employee_personal_browse.id, val_for_hr_personal_tab, context=context)
-
+		print ("Employee Extends"),super(hr_employee, self).write(cr, uid, ids, vals, context=context)
 		return super(hr_employee, self).write(cr, uid, ids, vals, context=context)
 
 	def run_fetch_employee_image_from_users(self, cr, uid, automatic=False, use_new_cursor=False, context=None):

@@ -19,6 +19,7 @@
         <field name="implied_ids" eval="[(4, ref('base.group_hr_project_manager'))]"/>
         <field name="comment">the user will be able to approve document created by employees.</field>
     </record>
+    
     <record id="base.group_hr_manager" model="res.groups">
         <field name="name">Manager</field>
         <field name="comment">the user will have an access to the human resources configuration as well as statistic reports.</field>
@@ -36,6 +37,7 @@
         <field eval="True" name="global"/>
         <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
     </record>
+    
     <record id="hr_job_comp_rule" model="ir.rule">
         <field name="name">Job multi company rule</field>
         <field name="model_id" ref="model_hr_job"/>
@@ -45,6 +47,7 @@
 
 </data>
 <data noupdate="0">
+        
         <record id="hr_employee_multi_comp_rule" model="ir.rule">
             <field name="name">Employee multi company rule</field>
             <field name="model_id" ref="model_hr_employee"/>

@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+    <!-- Menu under the Top Menu Knowledge-->
     <menuitem name="Document Management" id="menu_document_management_configuration" parent="knowledge.menu_document_configuration" sequence="1"/>
 
+
+<!--Directory FOrm View-->
     <record model="ir.ui.view" id="view_document_directory_form">
         <field name="name">document.directory</field>
         <field name="model">document.directory</field>
@@ -84,40 +87,7 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_document_directory_tree">
-        <field name="name">document.directory</field>
-        <field name="model">document.directory</field>
-        <field name="field_parent">child_ids</field>
-        <field name="arch" type="xml">
-            <tree string="Directories" toolbar="1">
-                <field name="name"/>
-                <field name="type"/>
-                <field name="user_id"/>
-                <field name="company_id" groups="base.group_multi_company"/>
-                <field name="create_date"/>
-                <field name="write_date"/>
-            </tree>
-        </field>
-    </record>
 
-    <record id="view_document_directory_filter" model="ir.ui.view">
-        <field name="name">Search View: Document Directory</field>
-        <field name="model">document.directory</field>
-        <field name="arch" type="xml">
-            <search string="Search Document Directory">
-                <field name="name" string="Document Directory"/>
-                <filter string="Static" domain="[('type','=','directory')]"/>
-                <filter string="Resources" icon="terp-personal" domain="[('type','=','ressource')]"/>
-                <field name="company_id" groups="base.group_multi_company"/>
-                <field name="user_id" />
-                <group expand="0" string="Group By">
-                    <filter string="Owner" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
-                    <filter string="Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'type'}"/>
-                    <filter string="Company" domain="[]" icon="terp-go-home" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
-                </group>
-           </search>
-        </field>
-    </record>
 
     <record model="ir.actions.act_window" id="action_document_directory_form">
         <field name="name">Directories</field>
@@ -147,6 +117,24 @@
         parent="menu_document_management_configuration"/>
 
 
+<!-- Tree View for the Directories Struture-->
+    <record model="ir.ui.view" id="view_document_directory_tree">
+        <field name="name">document.directory</field>
+        <field name="model">document.directory</field>
+        <field name="field_parent">child_ids</field>
+        <field name="arch" type="xml">
+            <tree string="Directories" toolbar="1">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="user_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="create_date"/>
+                <field name="write_date"/>
+            </tree>
+        </field>
+    </record>
+
+
     <record model="ir.actions.act_window" id="action_document_directory_tree">
         <field name="type">ir.actions.act_window</field>
         <field name="name">Directories' Structure</field>
@@ -155,10 +143,35 @@
         <field name="view_id" ref="document.view_document_directory_tree"/>
         <field name="domain">[('ressource_parent_type_id','=',False),('parent_id','=',False)]</field>
     </record>
+
     <menuitem
         action="action_document_directory_tree"
         id="menu_document_directories_tree"
         parent="menu_document_management_configuration" sequence="5"/>
+<!-- Search View-->
+
+    <record id="view_document_directory_filter" model="ir.ui.view">
+        <field name="name">Search View: Document Directory</field>
+        <field name="model">document.directory</field>
+        <field name="arch" type="xml">
+            <search string="Search Document Directory">
+                <field name="name" string="Document Directory"/>
+                <filter string="Static" domain="[('type','=','directory')]"/>
+                <filter string="Resources" icon="terp-personal" domain="[('type','=','ressource')]"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="user_id" />
+                <group expand="0" string="Group By">
+                    <filter string="Owner" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                    <filter string="Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'type'}"/>
+                    <filter string="Company" domain="[]" icon="terp-go-home" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                </group>
+           </search>
+        </field>
+    </record>
+
+
+
+
 
     <record model="ir.ui.view" id="view_document_file_form">
         <field name="name">ir.attachment</field>
@@ -271,7 +284,7 @@
     </record>
 
 
-    <act_window domain="[('partner_id', '=', active_id)]"
+    <act_window domain="[('partner_id', '=', dd)]"
         context="{'default_partner_id': active_id}"
         id="act_res_partner_document" name="Related Documents"
         res_model="ir.attachment"

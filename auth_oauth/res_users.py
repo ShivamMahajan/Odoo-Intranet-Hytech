@@ -151,14 +151,7 @@ class res_users(osv.Model):
             if not res:
                 raise
 
-class res_company(osv.osv):
-    _inherit = 'res.company'
 
-    _columns = {
-        'email_domain': fields.char('Email Domain', required=True, help="Enter Company Email Domain",copy=False),
-        'apply_leave_policy' :fields.boolean ("Apply Leave Policy",default=True),
-        'employee_access':fields.one2many('employee_access.detail','company_id',string="Employee"),
-    }
 
 
 class product_template(osv.osv):
@@ -169,7 +162,15 @@ class product_template(osv.osv):
 
     }
 
+class res_company(osv.osv):
+    _inherit = 'res.company'
 
+    _columns = {
+        'email_domain': fields.char('Email Domain', required=True, help="Enter Company Email Domain",copy=False),
+        'apply_leave_policy' :fields.boolean ("Apply Leave Policy",default=True),
+        'employee_access':fields.one2many('employee_access.detail','company_id',string="Employee"),
+    }
+    
 class employee_access_detail(osv.osv):
     _name="employee_access.detail"
 

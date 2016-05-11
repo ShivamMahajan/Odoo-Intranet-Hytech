@@ -119,6 +119,7 @@ class project_work(osv.osv):
         vals_line['product_id'] = result['product_id']
         if vals.get('date'):
             timestamp = datetime.datetime.strptime(vals['date'], tools.DEFAULT_SERVER_DATETIME_FORMAT)
+            print ("timestamp"),timestamp
             ts = fields.datetime.context_timestamp(cr, uid, timestamp, context)
             vals_line['date'] = ts.strftime(tools.DEFAULT_SERVER_DATE_FORMAT)
 
