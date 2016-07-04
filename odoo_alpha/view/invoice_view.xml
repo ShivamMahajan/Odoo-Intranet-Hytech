@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="invoice_form_form_add_shipping" model="ir.ui.view">
+			<field name="name">account.invoice.form.shipping</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="partner_shipping_id" domain="[('parent_id','=',partner_id)]" context="{'default_type':'delivery','default_parent_id':partner_id}" />
+					<field name="partner_contact_id" domain="[('parent_id','=',partner_id)]" context="{'default_type':'contact','default_parent_id':partner_id}" />
+				</xpath>
+				
+			</field>
+		</record>
+	</data>
+</openerp>

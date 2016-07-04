@@ -1,0 +1,65 @@
+<openerp>
+	<data>
+		<record id="view_account_due_statment_graph" model="ir.ui.view">
+			<field name="name">account_due.statment.graph</field>
+			<field name="model">account_due.statment</field>
+			<field name="arch" type="xml">
+				<graph string="Statment lines" type="pivot">
+					<field name="partner_id" type="row" />
+					<field name="date_maturity" type="col" />
+					<field name="balance" type="measure" />
+				</graph>
+			</field>
+		</record>
+		<record id="account_due_statment_search" model="ir.ui.view">
+			<field name="name">account_due.statment.search</field>
+			<field name="model">account_due.statment</field>
+			<field name="arch" type="xml">
+				<search string="Statment lines">
+					<field name="date_move" />
+					<filter string="This Fiscal year" name="fiscalyear"
+						domain="[('period_id','in','current_year')]" help="Statment Entries with period in current year" />
+					<separator />
+					<field name="partner_id" />
+					<field name="balance" />
+					<group expand="1" string="Group By">
+						<filter string="Partner" context="{'group_by':'partner_id'}" />
+						<filter string="Company" groups="base.group_multi_company"
+							context="{'group_by':'company_id'}" />
+						<separator />
+					</group>
+				</search>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="account_due_statment_tree_view">
+			<field name="name">account_due.statment.tree</field>
+			<field name="model">account_due.statment</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Statment lines">
+					<field name="partner_id" />
+					<field name="date_move" />
+					<field name="invoice_number" />
+					<field name="ref" />
+					<field name="date_maturity" />
+					<field name="debit" />
+					<field name="credit" />
+					<field name="balance" />
+				</tree>
+			</field>
+		</record>
+		<record id="action_account_due_statment" model="ir.actions.act_window">
+			<field name="name">Statments Analysis</field>
+			<field name="res_model">account_due.statment</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph,tree</field>
+			<field name="view_id" ref="account_due_statment_tree_view" />
+			<field name="search_view_id" ref="account_due_statment_search" />
+		</record>
+		<menuitem id="account_due_statment_parent_menu" name="Customers Statements" parent="account.menu_finance" sequence="4"/>
+		<menuitem id="menu_account_due_statment" parent="account_due_statment_parent_menu"
+			name="Statements Analysis" groups="account.group_account_invoice"
+			action="action_account_due_statment" />
+
+	</data>
+</openerp>

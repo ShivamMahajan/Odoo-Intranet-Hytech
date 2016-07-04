@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_order_form_add_contact" model="ir.ui.view">
+			<field name="name">sale.order.form.contact</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_shipping_id']" position="after">
+					<field name="partner_contact_id" domain="[('parent_id','=',partner_id)]" context="{'default_type':'contact','default_parent_id':partner_id}" />
+				</xpath>
+				
+				<xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+					<attribute name="context">{'default_type':'invoice', 'default_parent_id':partner_id}</attribute>
+					<attribute name="domain">[('parent_id','=',partner_id)]</attribute>
+				</xpath>
+				
+				<xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+					<attribute name="context">{'default_type':'delivery','default_parent_id':partner_id}</attribute>
+					<attribute name="domain">[('parent_id','=',partner_id)]</attribute>
+				</xpath>
+				
+			          
+				
+			</field>
+		</record>
+	</data>
+</openerp>

@@ -44,6 +44,7 @@ class project_project(osv.osv):
     }
 
     def open_timesheets(self, cr, uid, ids, context=None):
+        print "open_timesheets"
         """ open Timesheets view """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')

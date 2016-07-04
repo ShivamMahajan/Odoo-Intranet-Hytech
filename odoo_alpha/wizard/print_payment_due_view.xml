@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_wizard_payment_due" model="ir.ui.view">
+			<field name="name">wizard.payment.due.form</field>
+			<field name="model">wizard.payment.due</field>
+			<field name="arch" type="xml">
+				<form string="move report">
+					<group>
+						<group>
+							<field name="date" />
+						</group>
+						<group>
+						</group>
+					</group>
+					<separator string="Customers"/>
+					<field name="partner_ids" domain="[('payment_amount_due','&gt;',0)]" />
+					<footer>
+						<button name="print_report" type="object" string="Print Customers Statements"
+							class="oe_highlight" />
+
+					</footer>
+				</form>
+			</field>
+		</record>
+
+       <record id="action_wizard_payment_due" model="ir.actions.act_window">
+            <field name="name">Statements Report</field>
+            <field name="res_model">wizard.payment.due</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wizard_payment_due"/>
+            <field name="target">new</field>
+        </record>
+
+         <record id="view_res_partner_inherit_tree" model="ir.ui.view">
+            <field name="name">res.partner.inherit.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+              
+               	 	<xpath expr="/tree/field[@name='display_name']" position='replace'>
+                       	 <field name="display_name" string="Companies"/>
+                       </xpath>
+                       <xpath expr="/tree/field[@name='display_name']" position='after'>
+                       	  <field name="payment_amount_due" string="Balance Outstanding"/>
+                       </xpath>
+                 
+               
+            </field>
+        </record>
+
+        <menuitem  action="action_wizard_payment_due"
+            id="menu_wizard_payment_due" sequence="50"
+            parent="account_due_statment_parent_menu" />
+            
+			
+	</data>
+</openerp>    

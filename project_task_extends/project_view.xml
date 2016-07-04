@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+ 
+
+        <record id="view_task_form2_inherit" model="ir.ui.view">
+        <field name="name">project.task.form</field>
+        <field name="model">project.task</field>
+        <field eval="2" name="priority"/>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_ids']" position='replace'>
+                <field name="work_ids" attrs="{'readonly':[('stage_id','!=', 10)]}" groups="project.group_tasks_work_on_tasks">
+                    <tree string="Task Work" editable="top">
+                        <field name="name"/>
+                        <field name="hours" widget="float_time" sum="Spent Hours"/>
+                        <field name="date"/>
+                        <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'project.group_project_user']}"/>
+                    </tree>
+                </field>
+            </xpath>
+
+             <xpath expr="//group[@string='Gantt View']" position='replace'>
+                 <group string="Gantt View">
+                <field name="date_start" attrs="{'readonly':[('stage_id','!=', 9)]}"/>
+                <field name="date_end" attrs="{'readonly':[('stage_id','=', 11)]}"/>
+                 </group >
+             </xpath>
+
+<!--              <group string="Gantt View" position='replace'>
+                 <group string="Gantt View">
+                <field name="date_start" attrs="{'readonly':[('stage_id','!=', 9)]}"/>
+                <field name="date_end" attrs="{'readonly':[('stage_id','=', 11)]}"/>
+                 </group >
+             </group> -->
+          </field>
+        </record>
+
+
+    <record id="edit_view_task_kanban" model="ir.ui.view">
+            <field name="name">edit.project.task.kanban</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <field name="color" position="after">
+               <!--  <field name="colour_ids" invisible="1"/> --> 
+            </field>
+        </field>
+    </record>
+
+         <record id="ir_cron_task_skin_moodification" model="ir.cron">
+            <field name="name">Task Skin Colour  Modification</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model">project.task</field>
+            <field name="function">task_skin_change_colour</field>
+            <field name="args">()</field>
+        </record>
+  </data>
+</openerp>

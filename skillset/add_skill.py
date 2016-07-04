@@ -29,9 +29,7 @@ class add_skill_sets(osv.osv_memory):
         employee_values={}
         employee_object=self.pool.get('hr.employee')
         employee_browse=employee_object.browse(cr,SUPERUSER_ID,context['active_id'])
-        print employee_browse
         current_data=self.browse(cr,uid,ids)
-        print current_data
         if current_data.user_id==employee_browse.user_id :
         	skill_set_ids = [skills.id for skills in current_data.new_key_skill ]
         	employee_values.update({'key_skill':[(6,0,skill_set_ids)]})

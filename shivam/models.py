@@ -46,4 +46,10 @@ class Shivam(osv.osv):
 
 	def user_defined_method(self,cr,uid,ids,context=None):
 		print "Calling User user_defined_method"
+		print ("Print Recordset"), self
+		# for record in self :
+		# 	print ("Printing Rocords")
+		# 	print record
+		# 	print record.name
+		# 	print record.parent_id
 		return None 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="new_list">
+      <field name="name">New list</field>
+      <field name="model">new.model</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" />
+          <field name="name"  />
+          <field name="parent_id"  />
+        </tree>
+      </field>
+    </record>
+
+      <record model="ir.ui.view" id="new_form">
+      <field name="name">New list</field>
+      <field name="model">new.model</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+          <field name="name" widget= "test" /></group>
+         <group> <field name="name"  widget= "test"/></group>
+          <group><field name="parent_id"  widget= "test"/></group>
+        </form>
+      </field>
+    </record>
+    
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="new_action_window">
+      <field name="name">new window</field>
+      <field name="res_model">new.model</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+<!--     
+    <menuitem name="New Model" id="menu_2_list" parent="menu_1_list"
+             /> -->
+      <menuitem name="New Model"  id="menu_1_2_list" parent="menu_1_list" sequence="0"/>
+     <menuitem name="New Model" id="menu_1_2_1_list" parent="menu_1_2_list"
+              action="new_action_window" />
+ 
+    
+  </data>
+</openerp>

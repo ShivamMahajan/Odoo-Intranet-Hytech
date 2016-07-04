@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+            <record id="view_project_task_work_tree" model="ir.ui.view">
+            <field name="name">project.task.work.tree</field>
+            <field name="model">project.task.work</field>
+            <field name="arch" type="xml">
+                <tree string="Task Work Summary" create="false" edit="false">
+                    <field name="project_id"/>
+                    <field name="task_id"/>
+                    <field name="date_deadline_task"/>
+                    <field name="task_stage"/>
+                    <field name="date_start_task"/>
+                    <field name="date_end_task"/>
+                   <!--  <field name="task_planned_hours" widget="float"/> -->
+                    <field name="name"/>
+                    <field name="hours"/>
+                    <field name="date"/>
+                    <field name="user_id" string="Resource" />
+                </tree>
+            </field>
+            </record>
+
+          <record model="ir.actions.act_window.view" id="view_project_task_work_tree_htp">
+              <field name="sequence" eval="0"/>
+              <field name="view_mode">tree</field>
+              <field name="view_id" ref="view_project_task_work_tree"/>
+              <field name="act_window_id" ref="project_task_work_window"/>
+          </record>
+
+             <record id="view_project_task_work_form" model="ir.ui.view">
+            <field name="name">project.task.work.form</field>
+            <field name="model">project.task.work</field>
+            <field name="arch" type="xml">
+                <form string="Task Work Summary" create="false" edit="false">
+                    <group><field name="project_id"/></group>
+                    <group><field name="manager_id"/></group>
+                    <group><field name="task_id"/></group>
+                    <group><field name="name"/></group>
+                    <group><field name="hours"/></group>
+                   <group> <field name="date"/></group>
+                    <group><field name="user_id"/></group>
+                </form>
+            </field>
+            </record>
+
+            <record model="ir.actions.act_window.view" id="view_project_task_work_form_htp">
+              <field name="sequence" eval="1"/>
+              <field name="view_mode">form</field>
+              <field name="view_id" ref="view_project_task_work_form"/>
+              <field name="act_window_id" ref="project_task_work_window"/>
+          </record>      
+
+    <record model="ir.actions.act_window" id="project_task_work_window">
+      <field name="name">Task work Summary</field>
+      <field name="res_model">project.task.work</field>
+      <field name="context">{'search_default_group_date_month':1,'search_default_group_user_id': 1}
+      </field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="view_project_task_work_search_form"/>
+    </record>
+
+      <record id="view_project_task_work_search_form" model="ir.ui.view">
+            <field name="name">project.task.work.search</field>
+            <field name="model">project.task.work</field>
+            <field name="arch" type="xml">
+               <search string="Project Task Work">
+                    <group expand="0" string="Group By">
+                        <filter name="group_date_month" string="Month Wise" context="{'group_by':'date:month'}" help="Creation Month"/>
+                        <filter name="group_date_day" string="Day Wise" context="{'group_by':'date:day'}" help="Creation Day"/>
+                        <filter name="group_date_week" string="Week Wise" context="{'group_by':'date:week'}" help="Creation Day"/>
+                         <filter string="Project" name="group_project_id" context="{'group_by':'project_id'}" help="Project Name"/>
+                         <filter string="Task" name="group_task_id" context="{'group_by':'task_id'}" help="Task Name"/>
+                         <filter name="group_user_id" string="Resource" context="{'group_by':'user_id'}" help="Completed By"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+  
+<menuitem name="Task Work Summary" id="project_task_work_menu_project_management" parent="project.menu_project_management"
+              action="project_task_work_window" />
+
+</data>
+</openerp>

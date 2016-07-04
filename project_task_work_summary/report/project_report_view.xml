@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>  
+  
+  
+  
+  
+  <record id="action_work_summary_xls" model="ir.actions.report.xml">
+      <field name="name">Project Status Report - Details</field>
+      <field name="model">project.task.report.wizard</field>
+      <field name="type">ir.actions.report.xml</field>
+      <field name="report_name">work.summary.xls</field>
+      <field name="report_type">xls</field>
+      <field name="auto" eval="False"/>
+    </record>
+    <record model="ir.values" id="work_summary_xls_values">
+      <field name="name">Project Status Report - Details</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.report.xml,' +str(ref('action_work_summary_xls'))" />
+      <field name="model">project.task.report.wizard</field>
+  </record>
+
+
+  <record id="action_work_summary_report_xls" model="ir.actions.report.xml">
+      <field name="name">Employee Productivity Report - Summary</field>
+      <field name="model">project.task.report.wizard</field>
+      <field name="type">ir.actions.report.xml</field>
+      <field name="report_name">work.summary.report.xls</field>
+      <field name="report_type">xls</field>
+      <field name="auto" eval="False"/>
+    </record>
+    <record model="ir.values" id="work_summary_report_xls_values">
+      <field name="name">Employee Productivity Report - Summary</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.report.xml,' +str(ref('action_work_summary_report_xls'))" />
+      <field name="model">project.task.report.wizard</field>
+  </record> 
+
+
+  <record id="action_project_status_report_summary_xls" model="ir.actions.report.xml">
+      <field name="name">Project Status Report - Summary</field>
+      <field name="model">project.task.report.wizard</field>
+      <field name="type">ir.actions.report.xml</field>
+      <field name="report_name">project.status.report.summary.xls</field>
+      <field name="report_type">xls</field>
+      <field name="auto" eval="False"/>
+    </record>
+    <record model="ir.values" id="project_staus_report_summary_xls_values">
+      <field name="name">Project Status Report - Summary</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.report.xml,' +str(ref('action_project_status_report_summary_xls'))" />
+      <field name="model">project.task.report.wizard</field>
+  </record>       
+    
+	  </data>
+</openerp>     

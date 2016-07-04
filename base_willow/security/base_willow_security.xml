@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<!-- 	A group which should have nobody in it - useful for hiding menu options. -->
+	<data noupdate="0">
+		<record id="group_nobody" model="res.groups">
+			<field name="name">Nobody</field>
+		</record>
+	</data>
+</openerp>

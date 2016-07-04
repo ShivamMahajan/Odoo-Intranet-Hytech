@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_partner_form_abn_acn" model="ir.ui.view">
+			<field name="name">res.partner.form.abn_acn</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<xpath expr='//page[@name="sales_purchases"]//field[@name="supplier"]' position="after">
+					<field name="abn" on_change="on_change_abn(abn)"/>
+					<field name="acn" on_change="on_change_acn(acn)"/>
+					<field name="ird" on_change="on_change_ird(ird)"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

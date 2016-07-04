@@ -390,7 +390,7 @@
                         <field name="kanban_state" class="oe_inline" widget="kanban_state_selection"/>
                     </div>
                     <h1>
-                        <field name="name" placeholder="Task summary..." class="oe_inline"/>
+                        <field name="name" placeholder="Task summary..." class="oe_inline" on_change="onchange_name(name)"/>
                     </h1>
                     <group>
                         <group>
@@ -485,7 +485,7 @@
             <field name="name">project.task.kanban</field>
             <field name="model">project.task</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="stage_id" >
+                <kanban default_group_by="stage_id" default_order="id desc" >
                     <field name="color"/>
                     <field name="priority"/>
                     <field name="stage_id"/>

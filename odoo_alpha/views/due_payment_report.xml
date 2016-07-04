@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_payment_due_view">
+
+			<t t-foreach="get_partners(data['form']['partner_ids'])" t-as="o">
+				<t t-if="getLines(o,data['form']['date'])">
+					<div class="header">
+
+						<div class="col-xs-5">
+							<t t-set="company" t-value="res_company" />
+							<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+								style="max-height: 100px;" />
+							<t t-raw="0" />
+							<ul>
+								<li style="list-style-type: none; line-height: 110%;">
+									ABN:
+									<span t-field="company.partner_id.abn" />
+								</li>
+								<li style="list-style-type: none; 
+									line-height: 110%;">
+									ACN:
+									<span t-field="company.partner_id.acn" />
+								</li>
+							</ul>
+						</div>
+
+
+						<div class="col-xs-6">
+							<h3>
+								<strong>Alpha Supply Pty Ltd</strong>
+							</h3>
+							<ul style="list-style-type: none; line-height: 110%;">
+								<li>
+									<span t-field="company.street" />
+								</li>
+								<li>
+									<span t-if="company.street2" t-field="company.street2" />
+								</li>
+								<li>
+									<span t-field="company.city" />
+									,
+									<span t-field="company.state_id" />
+									<span t-field="company.zip" />
+								</li>
+								<li>
+									<span t-field="company.country_id" />
+								</li>
+							</ul>
+
+							<ul>
+								<li style="list-style-type: none; line-height: 110%;">
+									Ph:
+									<span t-field="company.phone" />
+								</li>
+								<li style="list-style-type: none; line-height: 110%;">
+									Fax:
+									<span t-field="company.fax" />
+								</li>
+								<li style="list-style-type: none; line-height: 110%;">
+									Email:
+									<span t-field="company.partner_id.email" />
+								</li>
+								<li style="list-style-type: none; line-height: 110%;">
+									<span t-field="company.website" />
+								</li>
+							</ul>
+						</div>
+
+						<div class="col-xs-12" style="border-top: 3px solid grey;" />
+					</div>
+
+
+					<div class="page">
+
+						<style>
+							.table-border-vertical 
+							{ border-collapse: collapse;
+							width: 100%;
+							max-width: 100%;
+							margin-bottom: 21px;
+							}
+							tr { border: none; }
+							td
+							{
+							border-right: solid 1px #000;
+							border-left: solid 1px #000;
+							padding: 0px;
+							}
+							.tr_border>td{
+							border: 1px solid #000;
+							}
+
+						</style>
+
+						<div class="row">
+							<div class="col-xs-6" style="margin-top:10px;">
+								<table class="table-condensed table-border-vertical">
+									<tr class="tr_border">
+										<td class="text-center">
+											<strong>CUSTOMER</strong>
+										</td>
+									</tr>
+									<tr class="tr_border">
+										<td>
+											<ul style="list-style-type: none; line-height: 110%;">
+												<li>
+													<span t-field="o.name" />
+												</li>
+												<li>
+													<span t-field="o.street" />
+													<span t-if="o.street2" t-field="o.street2" />
+												</li>
+												<li>
+													<span t-field="o.city" />
+													,
+													<span t-field="o.state_id" />
+													<span t-field="o.zip" />
+												</li>
+
+											</ul>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="col-xs-4 col-xs-offset-2" style="margin-top:10px;">
+								<table class="table-condensed table-border-vertical">
+									<tr class="tr_border">
+										<td class="text-center">
+											<strong>STATEMENT</strong>
+										</td>
+									</tr>
+									<tr class="tr_border">
+										<td>
+											<strong>Date:</strong>
+											<span t-esc="formatLang(data['form']['date'], date=True)" />
+										</td>
+									</tr>
+								</table>
+								<table class="table-condensed table-border-vertical">
+									<tr class="tr_border">
+										<td>
+											<strong>
+												Trading Limit
+												<br />
+												Current Balance:
+												<span
+													t-esc="formatLang(total_balance(o,data['form']['date']),currency_obj=res_company.currency_id)" />
+											</strong>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<table class="table-border-vertical table-condensed" t-if="getLines(o,data['form']['date'])">
+							<thead>
+								<tr style="background-color:#7E8186;color:#FFF">
+									<th>DATE</th>
+									<th>INVOICE NUMBER</th>
+									<th>CUSTOMER REF</th>
+									<th class="text-right">VALUE</th>
+									<th class="text-right">BALANCE</th>
+								</tr>
+							</thead>
+							<t t-set="balance" t-value="0" />
+							<tr t-foreach="getLines(o,data['form']['date'])" t-as="line">
+								<td>
+									<span t-field="line.date" />
+								</td>
+								<td>
+									<span t-field="line.move_id.name" />
+								</td>
+								<td>
+									<span t-field="line.ref" />
+								</td>
+								<td class="text-right">
+									<span
+										t-esc="formatLang((line.debit-line.credit), currency_obj=res_company.currency_id)" />
+									<t t-set="balance" t-value="balance+line.debit-line.credit" />
+								</td>
+								<td class="text-right">
+									<span
+										t-esc="formatLang(balance, currency_obj=res_company.currency_id)" />
+								</td>
+							</tr>
+							
+							<tr>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+							</tr>
+							
+							<tr>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+							</tr>
+							
+							<tr>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+								<td><STRONG> </STRONG></td>
+							</tr>
+							
+							
+							
+							<tr class="tr_border">
+								<td style="border: 1px  solid #000;">
+									<STRONG>CURRENT</STRONG>
+								</td>
+								<td>
+									<STRONG>1-30 Days Past</STRONG>
+								</td>
+								<td class="text-center">
+									<STRONG>31-60 Days Past</STRONG>
+								</td>
+								<td class="text-center">
+									<STRONG>Over 60 Days Past</STRONG>
+								</td>
+								<td class="text-right">
+									<STRONG>AMOUNT DUE</STRONG>
+								</td>
+							</tr>
+							<tr class="tr_border">
+								<t t-set="month_balance" t-value="get_month_balance(o,data['form']['date'])" />
+								<td class="text-right">
+									<STRONG>
+										<span
+											t-esc="formatLang(month_balance[0],currency_obj=res_company.currency_id)" />
+									</STRONG>
+								</td>
+								<td class="text-right">
+									<STRONG>
+										<span
+											t-esc="formatLang(month_balance[1],currency_obj=res_company.currency_id)" />
+									</STRONG>
+								</td>
+								<td class="text-right">
+									<STRONG>
+										<span
+											t-esc="formatLang(month_balance[2],currency_obj=res_company.currency_id)" />
+									</STRONG>
+								</td>
+								<td class="text-right">
+									<STRONG>
+										<span
+											t-esc="formatLang(month_balance[3],currency_obj=res_company.currency_id)" />
+									</STRONG>
+								</td>
+								<td class="text-right">
+									<STRONG>
+										<span
+											t-esc="formatLang(total_balance(o,data['form']['date']),currency_obj=res_company.currency_id)" />
+									</STRONG>
+								</td>
+							</tr>
+
+						</table>
+
+
+						<p t-if="not getLines(o,data['form']['date'])">
+							<strong>There is nothing due with this customer.</strong>
+						</p>
+
+
+
+						<div class="col-xs-8" style="padding:5px;font-size: 12px;border: 1px solid black;">
+							<strong>Payment Methods:</strong>
+							<br />Direct Debit (preferred): Alpha Supply Pty Ltd BSB # 063-509 Acc # 10273745
+							<br />Credit Card Payments incur an additional fee of 2%
+							<br />Cheques made payable to ALPHA SUPPLY PTY LTD
+						</div>
+
+
+						<div class="col-xs-8" style="padding:5px;font-size: 12px;margin-top:2px;border: 1px solid black;">
+
+							<p style="font-size: 11px;">
+								PLEASE NOTE: All dealings with us are governed by our
+								Standard Terms
+								&amp; Conditions which
+								form part of our application
+								for a commercial credit account. Please
+								contact us ASAP if you do
+								not have a copy of the terms. These terms include limitations of
+								liability, reservation of title
+								clauses and other significant
+								commercial terms. These terms are
+								available on our website
+								www.alphasupply.com.au
+							</p>
+
+						</div>
+
+
+
+					</div>
+
+
+					<div class="footer">
+						<div class="text-center" style="border-top: 1px solid black;">
+
+							<ul class="list-inline">
+								<li>Page:</li>
+								<li>
+									<span class="page" />
+								</li>
+								<li>/</li>
+								<li>
+									<span class="topage" />
+								</li>
+							</ul>
+
+						</div>
+					</div>
+				</t>
+			</t>
+		</template>
+
+
+		<report id="report_payment_due" model="wizard.payment.due"
+			menu="False" string="Payment due" report_type="qweb-html"
+			file="odoo_alpha.report_payment_due_view" name="odoo_alpha.report_payment_due_view" />
+	</data>
+</openerp>

@@ -1,0 +1,64 @@
+<openerp>
+	<data>
+		<template id="report_product_history">
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<div class="page">
+						<div class="oe_structure" />
+
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Product
+									</th>
+									<th class="text-right">Qty Invoice IN
+									</th>
+									<th class="text-right">Qty Invoice OUT
+									</th>
+									<th class="text-right">Difference
+									</th>
+
+								</tr>
+
+							</thead>
+
+							<tbody>
+
+								<tr t-foreach="get_products(data['form']['product_ids'])"
+									t-as="product">
+
+									<td>
+										<t t-esc="product.name" />
+									</td>
+									<td class="text-right">
+										<t t-set="s_plus"
+											t-value="get_plus(data['form']['date_from'],data['form']['date_to'],product)" />
+										<t t-esc="s_plus" />
+									</td>
+									<td class="text-right">
+										<t t-set="s_minus"
+											t-value="get_minus(data['form']['date_from'],data['form']['date_to'],product)" />
+										<t t-esc="s_minus" />
+									</td>
+									<td class="text-right">
+										<t t-set="Diff" t-value="s_plus-s_minus" />
+										<t t-esc="Diff" />
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+
+				</t>
+			</t>
+		</template>
+
+		<report id="report_product" model="wizard.product.history"
+			menu="False" string="Product history" report_type="qweb-html"
+			file="odoo_alpha.report_product_history" name="odoo_alpha.report_product_history" />
+
+	</data>
+</openerp>

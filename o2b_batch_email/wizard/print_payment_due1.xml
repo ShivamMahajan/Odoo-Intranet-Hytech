@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_wizard_payment_due1" model="ir.ui.view">
+			<field name="name">wizard.payment.due1.form</field>
+			<field name="model">wizard.payment.due1</field>
+			<field name="arch" type="xml">
+				<form string="move report">
+					<group col="5" colspan="4">
+						<field name="date_from" on_change="onchange_date_from(date_from,date_to)" attrs="{'readonly':[('state','=','sent')]}"/>
+						<field name="date_to" on_change="onchange_date_from(date_from,date_to)" attrs="{'readonly':[('state','=','sent')]}"/>
+						<button name="show_invoice_list" type="object" string="Show Result" class="oe_highlight" states="draft"/>
+						<button name="show_log_list" type="object" string="Show Log" class="oe_highlight"/>
+						<field name="temp_wiz_id" invisible="1"/>
+						<field name="temp_wiz_id1" invisible="1"/>
+					</group>
+					<separator string="Customer Invoice"/>
+					<field name="invoice_ids" attrs="{'readonly':[('state','=','sent')]}">
+				       <tree string="Invoice">
+				            <field name="partner_id" groups="base.group_user"/>
+				            <field name="commercial_partner_id" invisible="1"/>
+				            <field name="date_invoice"/>
+				            <field name="number"/>
+				            <field name="reference" invisible="1"/>
+				            <field name="name" invisible="1"/>
+				            <field name="journal_id" invisible="1"/>
+				            <field name="period_id" invisible="1" groups="account.group_account_user"/>
+				            <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+				            <field name="user_id" string="Responsible"/>
+				            <field name="date_due"/>
+				            <field name="origin" invisible="1" /> 
+				            
+				            <field name="currency_id" groups="base.group_multi_currency"/>
+				            <field name="residual" invisible="1" sum="Residual Amount"/>
+				            <field name="amount_untaxed" invisible="1" sum="Untaxed Amount"/>
+				            <field name="amount_total" sum="Total Amount"/>
+				            <field name="state"/>
+				        </tree>
+					</field>
+					<footer>
+						<field name="state" widget="statusbar" statusbar_visible="sent" attrs="{'invisible':[('state','=','draft')]}"/>
+                        <button name="send_mail" type="object" string="Send By Email" class="oe_highlight" states="draft"/>
+					</footer>
+					<div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+				</form>
+			</field>
+		</record>
+
+       <record id="action_wizard_payment_due1" model="ir.actions.act_window">
+            <field name="name">Batch Invoices</field>
+            <field name="res_model">wizard.payment.due1</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_payment_due1"/>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem  action="action_wizard_payment_due1"
+            id="menu_wizard_payment_due1" sequence="51"
+            parent="odoo_alpha.account_due_statment_parent_menu"/>
+            
+
+		<!-- Wizard temp - for Invoice Selection -->
+		<record id="view_wizard_payment_due1_temp" model="ir.ui.view">
+			<field name="name">wizard.payment.due1.temp.form</field>
+			<field name="model">wizard.payment.due1.temp</field>
+			<field name="arch" type="xml">
+				<form string="Select Invoices">
+					<separator string="Customer Invoice"/>
+					<field name="invoice_list">
+				        <tree string="Invoice" editable="bottom" create="0" delete="0">
+							<field name="temp_check" string="Add/Remove"/>
+				            <field name="partner_id" groups="base.group_user" readonly="1"/>
+				            <field name="commercial_partner_id" invisible="1" readonly="1"/>
+				            <field name="date_invoice" readonly="1"/>
+				            <field name="number" readonly="1"/>
+				            <field name="email_send" readonly="1"/>
+				            <field name="reference" invisible="1" readonly="1"/>
+				            <field name="name" invisible="1" readonly="1"/>
+				            <field name="journal_id" invisible="1" readonly="1"/>
+				            <field name="period_id" invisible="1" groups="account.group_account_user" readonly="1"/>
+				            <field name="company_id" groups="base.group_multi_company" widget="selection" readonly="1"/>
+				            <field name="user_id" string="Responsible" readonly="1"/>
+				            <field name="date_due" readonly="1"/>
+				            <field name="origin" invisible="1" readonly="1"/>
+				            <field name="currency_id" groups="base.group_multi_currency" readonly="1"/>
+				            <field name="residual" invisible="1" sum="Residual Amount" readonly="1"/>
+				            <field name="amount_untaxed" invisible="1" sum="Untaxed Amount" readonly="1"/>
+				            <field name="amount_total" sum="Total Amount" readonly="1"/>
+				            <field name="state" readonly="1"/>
+				        </tree>
+					</field>
+					<footer>
+						<button name="action_select_all" type="object" string="Select All"/>
+						<button name="action_deselect_all" type="object" string="Deselect All"/>
+                        <button name="action_add_selected" type="object" string="Add Selected" class="oe_highlight"/>
+                        <button name="action_add_all" type="object" string="Add All" class="oe_highlight"/> or 
+                        <button name="cancel" special="cancel" string="Cancel" class="oe_link"/>
+					</footer>
+				</form>
+			</field>
+		</record>			
+	</data>
+</openerp>    

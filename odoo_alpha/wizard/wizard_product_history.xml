@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_wizard_product_history" model="ir.ui.view">
+			<field name="name">wizard.product.history.form</field>
+			<field name="model">wizard.product.history</field>
+			<field name="arch" type="xml">
+				<form string="move report">
+					<group>
+						<group>
+							<field name="date_from" />
+						</group>
+						<group>
+							<field name="date_to" />
+						</group>
+					</group>
+					<separator string="Products" />
+					<field name="product_ids" nolabel="1"/>
+					<footer>
+						<button name="print_report" type="object" string="Print"
+							class="oe_highlight" />
+
+					</footer>
+				</form>
+			</field>
+		</record>
+
+       <record id="action_wizard_product_history" model="ir.actions.act_window">
+            <field name="name">Products History</field>
+            <field name="res_model">wizard.product.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wizard_product_history"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem icon="STOCK_INDENT" action="action_wizard_product_history"
+            id="menu_wizard_product_history" sequence="50"
+            parent="stock.menu_traceability" />
+            
+			
+	</data>
+</openerp>    

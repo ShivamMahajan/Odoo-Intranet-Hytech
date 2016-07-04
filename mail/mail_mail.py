@@ -171,9 +171,9 @@ class mail_mail(osv.Model):
             :param boolean force: force the subject replacement
         """
         if (force or not mail.subject) and mail.record_name:
-            return 'Re: %s' % (mail.record_name)
+            return 'Auto Reply ERP: %s' % (mail.record_name)
         elif (force or not mail.subject) and mail.parent_id and mail.parent_id.subject:
-            return 'Re: %s' % (mail.parent_id.subject)
+            return 'Auto Reply ERP: %s' % (mail.parent_id.subject)
         return mail.subject
 
     def send_get_mail_body(self, cr, uid, mail, partner=None, context=None):

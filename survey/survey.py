@@ -38,7 +38,7 @@ _logger = logging.getLogger(__name__)
 class survey_stage(osv.Model):
     """Stages for Kanban view of surveys"""
 
-    _name = 'survey.stage'
+    _name = 'survey.stage' 
     _description = 'Survey Stage'
     _order = 'sequence,id'
 

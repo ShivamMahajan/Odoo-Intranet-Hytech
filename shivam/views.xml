@@ -23,9 +23,10 @@
       <field name="view_mode">tree,form</field>
     </record>
     
-    <menuitem name="List" id="menu_1_list"
+    <menuitem name="List" id="menu_1_list"/>
+              
+        <menuitem name="Old Model" id="menu_1_1_list" parent="menu_1_list"/>       
+    <menuitem name="Old Model" id="menu_1_1_1_list" parent="menu_1_1_list"
               action="shivam.action_window"/>
- 
-    
   </data>
 </openerp>

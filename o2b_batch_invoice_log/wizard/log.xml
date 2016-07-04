@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_wizard_payment_email_log" model="ir.ui.view">
+            <field name="name">wizard.payment.email.log.tree</field>
+            <field name="model">wizard.payment.email.log</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <separator string="Email Logs"/>
+                <form string="Email Logs">
+                    <field name="project_idss" domain="[('id','in',project_domain_idss[0][2])">
+                        <tree string="logs" editable="bottom" create="0" delete="0">
+                            <field name="partner_id" string="Partner" readonly="1"/>
+                            <field name="date_invoice" readonly="1"/>
+                            <field name="number" readonly="1"/>
+                            <field name="email_send" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="date_due" readonly="1"/>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="amount_total" readonly="1"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp> 

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_invoice_custom_batch_document">
+        <div class="page">
+        
+                    <!--Embeded css styles-->
+
+                    <style>
+                    
+                    #test {
+                                background-color: #999999;
+                          }
+                
+                    #test1 {
+                                -moz-border-radius:10px 0 0 10px;
+                                -webkit-border-radius:10px 0 0 10px;
+                           }
+    
+                    #test2 {
+                                -moz-border-radius:0 10px 10px 0;
+                                -webkit-border-radius:0 10px 10px 0;
+                           }
+    
+                    #size {
+                                font-size: 10px;
+                          }
+                    .adress_title {
+                             font-size: 15px !important;
+                             font-weight:bold;
+                       }
+                       
+                    .li_adress {
+                            /*line-height: 95%;*/
+                             font-size: 15px !important;
+                             list-style-type: none;
+                       }
+                       
+                    .right {
+                          text-align: right;
+                          margin-right: 1em;
+                        }
+                    .amount_total {
+                          font-weight:bold;
+                          font-size: 16px;
+                        }
+                     .td_header{
+                     color:#000;
+                     }
+                    
+                    #M_1 {
+                            text-align: center; width: 10%;
+                            display: inline-block;
+                            float: left;
+                         }
+    
+                    #M_2 {
+                            text-align: center; width: 30%;
+                            display: inline-block;
+                            float: left;
+                         }
+    
+                    #M_3 {
+                            text-align: center; width: 30%;
+                            display: inline-block;
+                            float: left;
+                         }
+    
+                    #M_4 {
+                            text-align: center; width: 30%;
+                            display: inline-block;
+                            float: left;
+                         }
+                    <!--             
+                    tr{
+                        padding: 20px;
+                    }
+                    -->
+                    <!--
+                    table { 
+                        border-spacing: 0;
+                        border-collapse: collapse;
+                    }
+                    -->
+                </style>
+
+                <!--Company logo-->
+              <div class="col-xs-4">   
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id"></t>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"></t>
+                    </t>
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 100px;"/>
+                    <t t-raw="0" />
+                    <ul>
+                    <li style="list-style-type: none; line-height: 110%;">ABN: <span t-field="o.company_id.partner_id.abn"></span></li>
+                    <li style="list-style-type: none; line-height: 110%;">ACN: <span t-field="o.company_id.partner_id.acn"></span></li>
+                    </ul>
+            </div>
+
+
+            
+            <div class= "col-xs-4">
+                    <h3><strong>Alpha Supply Pty Ltd</strong></h3>
+                    <ul style="list-style-type: none; line-height: 110%;"> 
+                    <li><span t-field="o.company_id.street"></span></li>
+                    <li><span t-if="o.company_id.street2" t-field="o.company_id.street2"></span></li>
+                    <li><span t-field="o.company_id.city"></span>, <span t-field="o.company_id.state_id"></span> <span t-field="o.company_id.zip"></span></li>
+                    <li><span t-field="o.company_id.country_id"></span></li>
+                    </ul>
+                    
+                    <ul>
+                    <li style="list-style-type: none; line-height: 110%;">Ph: <span t-field="o.company_id.phone"></span></li>
+                    <li style="list-style-type: none; line-height: 110%;">Fax: <span t-field="o.company_id.fax"/></li>
+                    <li style="list-style-type: none; line-height: 110%;">Email: <span t-field="o.company_id.partner_id.email"/></li>
+                    <li style="list-style-type: none; line-height: 110%;"><span t-field="o.company_id.website"/></li>
+                    </ul>
+            </div>
+
+
+
+            <div class="col-xs-4" style="margin-top: 5px;">
+            
+                        <div>
+                               <h3 class="text-center" style="font-weight:bold;">
+                                    <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">TAX INVOICE</span>
+                                    <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
+                                    <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                                    <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                                    <span t-if="o.type == 'out_refund'">Refund</span>
+                                    <span t-if="o.type == 'in_refund'">Supplier Refund</span>
+                                    <span t-if="o.type == 'in_invoice'">Supplier Invoice</span>
+                                </h3>
+                           </div>
+                            
+                        <div style="border: 1px solid #d3d3d3 ;padding:5px; margin-top: 12px;">
+                            
+                                <table  width="100%">
+                                    <tr>
+                                        <td >
+                                            <strong><span>Number: </span></strong>
+                                        </td>
+                                        <td   class="right">
+                                                <strong> <span t-field="o.number"/></strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >Date: </td>
+                                        <td   class="right">
+                                            <span  t-field="o.date_invoice" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >Cust Ref: </td>
+                                        <td   class="right">
+                                            <span t-field="o.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td >Alpha Ref: </td>
+                                        <td   class="right">
+                                            <span  t-raw="SO079" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+            </div>
+            
+           <div class="col-xs-12" style="border-top: 3px solid grey;"/>
+      
+                <div class="row"  >
+                        <div class="col-xs-6"><p/><p><span class="adress_title">Invoice to:</span></p></div>
+                        <div class="col-xs-6"><p/><p><span class="adress_title">Delivery Address:</span></p></div>
+                 </div>   
+                     
+                <div class="row">
+                    <div class="col-xs-6">
+                          <ul>
+                            <li class="li_adress"><span t-if="o.partner_id.name" t-field="o.partner_id.name"/></li>
+                            <li class="li_adress"><span t-if="o.partner_id.street" t-field="o.partner_id.street"/></li>
+                            <li class="li_adress"><span t-if="o.partner_id.street2" t-field="o.partner_id.street2"></span></li>
+                            <li class="li_adress"><font t-if="o.partner_id.city" t-field="o.partner_id.city"></font>, <font t-field="o.partner_id.state_id"></font> <font t-field="o.partner_id.zip"/></li>
+                            <!-- <li class="li_adress"><span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id"></span></li> -->
+                        </ul>
+                    </div>
+                    
+                    <div class="col-xs-6">
+                           <ul>
+                            <li class="li_adress"><span t-if="o.partner_shipping_id.name" t-esc="o.partner_shipping_id.name"/></li>
+                            <li class="li_adress"><span t-if="o.partner_shipping_id.street" t-esc="o.partner_shipping_id.street"/></li>
+                            <li class="li_adress"><span t-if="o.partner_shipping_id.street2" t-esc="o.partner_shipping_id.street2"></span></li>
+                            <li class="li_adress"><font t-if="o.partner_shipping_id.city" t-esc="o.partner_shipping_id.city"></font>, <font t-esc="o.partner_shipping_id.state_id.name"></font> <font t-esc="o.partner_shipping_id.zip"/></li>
+                            <li class="li_adress"> <strong>Site Contact : </strong><span t-if="o.partner_contact_id" t-esc="o.partner_contact_id.name"/></li>
+                            <!--<li class="li_adress"><span t-if="o.partner_shipping_id.country_id" t-esc="o.partner_shipping_id.country_id.name"></span></li> -->
+                        </ul>
+                        
+                    </div>
+                </div>                  
+                  
+                        
+                    
+
+            <table class="table table-condensed" style="margin-top:10px !important;">
+                <tr id="test">
+                         <td class="td_header" width="52%"><strong>DESCRIPTION</strong></td>
+                         <td class="td_header" width="6%"><strong>QTY</strong></td>
+                         <td class="td_header" width="6%"><strong>UNIT</strong></td>
+                         <td  class="td_header text-right" width="10%"><strong>NETT</strong></td>
+                         <td  class="td_header text-right" width="7%"><strong>DISC%</strong></td>
+                         <td  class="td_header text-right" width="7%"><strong>TAX%</strong></td>
+                         <td  class="td_header text-right" width="12%"><strong>NETT TOTAL</strong></td>
+                 </tr>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.invoice_line" t-as="l">
+                        <td><span t-field="l.name" /></td>
+                        <td><span t-field="l.quantity" /></td>
+                        <td> <span t-field="l.uos_id"   groups="product.group_uom"/> </td>
+                        <td class="text-right"><span t-field="l.price_unit" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></td>
+                        <td class="text-right"  ><span t-field="l.discount"/></td>   
+                        <td class="text-right"  >   <span t-esc="int(l.invoice_line_tax_id.amount * 100)"></span><span>%</span>  </td>
+                        <td   class="text-right" > <span t-field="l.price_subtotal"   t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+    
+       <div class="col-xs-7">
+                 <p t-if="o.payment_term.note">
+                        <strong>Payment Term:</strong>
+                        <span t-field="o.payment_term.note"/>
+                    </p>
+               </div>
+                    
+                  <div class="row col-xs-5 pull-right">
+                    <table class="table table-condensed">
+                        <tr>
+                            <td class="amount_total">SUBTOTAL EXCL GST:</td>
+                            <td class="amount_total text-right">
+                                <span t-field="o.amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="amount_total">GST:</td>
+                            <td class="amount_total text-right">
+                                <span t-field="o.amount_tax" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                        <tr style="border:none;background-color: #999999;">
+                            <td class="amount_total"><strong>TOTAL: </strong></td>
+                            <td  class="amount_total text-right">
+                                 <strong><span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">This invoice is due  on <span  t-field="o.date_due" t-field-options='{"format": "d-MMMM-y"}' /> </td>
+                        </tr>
+                    </table>
+                </div>
+     
+
+       
+        </div>
+        
+        
+<div class="footer">
+
+ <div class="col-xs-12" style="border-top: 3px solid grey;"/>
+ 
+ 
+             <div class="col-xs-6" style="padding:5px;font-size: 11px;">
+                                 <p><strong>Payment Methods:</strong></p>
+                                 <strong>Direct Debit (preferred): Alpha Supply Pty Ltd BSB # 063-509 Acc # 10273745</strong>
+                                 Credit Card Payments incur an additional fee of 2% <br/>
+                                 Cheques made payable to ALPHA SUPPLY PTY LTD<br/>
+                                 
+                            </div>
+                                          
+                                          
+            <div class="col-xs-6" style="padding:5px;font-size: 11px;">
+                              
+                                <p  style="font-size: 11px;">
+                                 PLEASE NOTE: All dealings with us are governed by our Standard Terms &#38; Conditions which
+                                    form part of our application for a commercial credit account. Please contact us ASAP if you do
+                                    not have a copy of the terms. These terms include limitations of liability, reservation of title
+                                    clauses and other significant commercial terms. These terms are available on our website
+                                    www.alphasupply.com.au
+                                 </p>
+                                 
+                            </div>
+ 
+
+ 
+
+        <div class="col-xs-12 text-center">
+        <!--  <t t-if="company.custom_footer">
+                <span t-raw="company.rml_footer"/>
+            </t> --> 
+
+            <ul class="list-inline">
+                <li>Page:</li>
+                <li><span class="page"/></li>
+                <li>/</li>
+                <li><span class="topage"/></li>
+            </ul>
+        </div>
+    </div> 
+</template>
+
+<template id="report_invoice_custom_batch">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'o2b_batch_email.report_invoice_custom_batch_document')"/>
+        </t>
+    </t>
+</template>
+
+<report id="account_invoices_custom_batch"
+		model="account.invoice"
+		menu="False" 
+		string="Customer Invoice" 
+		report_type="qweb-pdf"
+		file="o2b_batch_email.report_invoice_custom_batch" name="o2b_batch_email.report_invoice_custom_batch" />
+</data>
+</openerp>

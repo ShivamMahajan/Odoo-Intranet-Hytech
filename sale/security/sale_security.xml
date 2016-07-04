@@ -10,13 +10,28 @@
     </record>
 
     <!--- Manager Level Access to see his and subordinate records  -->
+    <record id="base.group_sale_assistant_salesman" model="res.groups">
+        <field name="name">Assistant level see Own</field>
+        <field name="category_id" ref="base.module_category_sales_management"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_sale_salesman'))]"/>
+        <field name="comment">the user will have access to his own data in the sales application as a manager level access.</field>
+    </record>  
+    
+    <record id="base.group_sale_manager_salesman" model="res.groups">
+        <field name="name">Manager level See Own</field>
+        <field name="category_id" ref="base.module_category_sales_management"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_sale_assistant_salesman'))]"/>
+        <field name="comment">the user will have access to his own data in the sales application as a manager level access.</field>
+    </record>  
+    
+    <!--
     <record id="base.group_sale_manager_salesman" model="res.groups">
         <field name="name">Manager level See Own</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
         <field name="implied_ids" eval="[(4, ref('base.group_sale_salesman'))]"/>
         <field name="comment">the user will have access to his own data in the sales application as a manager level access.</field>
     </record>
-
+    -->
     <record id="base.group_sale_salesman_all_leads" model="res.groups">
         <field name="name">See all Leads</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
@@ -139,25 +154,25 @@
 </data>
 <data noupdate="0">
 
-    <record id="sale_order_manager_personal_rule" model="ir.rule">
+     <record id="sale_order_manager_personal_rule" model="ir.rule">
         <field name="name">Manager Personal Orders</field>
         <field ref="model_sale_order" name="model_id"/>
         <field name="domain_force">['|',('user_id','=',user.id),('employee_id', 'child_of', [user.employee_ids[0].id])]</field>
-        <field name="groups" eval="[(4, ref('base.group_sale_manager_salesman'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_sale_assistant_salesman'))]"/>
     </record>
 
     <record id="sale_order_manager_report_see_own" model="ir.rule">
         <field name="name">Manager Own Orders Analysis</field>
         <field ref="model_sale_report" name="model_id"/>
         <field name="domain_force">['|',('user_id','=',user.id),('employee_id', 'child_of', [user.employee_ids[0].id])]</field>
-        <field name="groups" eval="[(4, ref('base.group_sale_manager_salesman'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_sale_assistant_salesman'))]"/>
     </record>
 
     <record id="sale_order_line_manager_personal_rule" model="ir.rule">
         <field name="name">Manager Own Order Lines</field>
         <field ref="model_sale_order_line" name="model_id"/>
         <field name="domain_force">['|',('order_id.user_id','=',user.id),('order_id.employee_id','child_of', [user.employee_ids[0].id])]</field>
-        <field name="groups" eval="[(4, ref('base.group_sale_manager_salesman'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_sale_assistant_salesman'))]"/>
     </record>
 
 </data>

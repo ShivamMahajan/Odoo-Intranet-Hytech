@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_invoice_alpha,partner_invoice_alpha_all,model_partner_invoice_alpha,,1,1,1,1
+access_partner_invoice_alpha_group_user,partner_invoice_alpha_group_user,model_partner_invoice_alpha,base.group_user,1,1,1,1
+access_wizard_payment_due1_temp,wizard_payment_due1_temp,model_wizard_payment_due1_temp,,1,1,1,1

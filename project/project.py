@@ -723,6 +723,13 @@ class task(osv.osv):
         for work in self.pool.get('project.task.work').browse(cr, uid, ids, context=context):
             if work.task_id: result[work.task_id.id] = True
         return result.keys()
+    
+    def onchange_name(self, cr, uid, ids, name):
+        if name != False:
+            name=name.title()
+            return {'value': {'name': name}}
+        return {}
+        
 
     _columns = {
         'active': fields.function(_is_template, store=True, string='Not a Template Task', type='boolean', help="This field is computed automatically and have the same behavior than the boolean 'active' field: if the task is linked to a template or unactivated project, it will be hidden unless specifically asked."),
@@ -782,6 +789,7 @@ class task(osv.osv):
         'id': fields.integer('ID', readonly=True),
         'color': fields.integer('Color Index'),
         'user_email': fields.related('user_id', 'email', type='char', string='User Email', readonly=True),
+        
     }
     _defaults = {
         'stage_id': _get_default_stage_id,
@@ -1010,6 +1018,10 @@ class task(osv.osv):
         # user_id change: update date_start
         if vals.get('user_id') and not vals.get('date_start'):
             vals['date_start'] = fields.datetime.now()
+        if vals.get('name'):
+            print vals['name']
+            vals['name']=vals['name'].title()
+            print vals['name']
 
         # context: no_log, because subtype already handle this
         create_context = dict(context, mail_create_nolog=True)
@@ -1299,7 +1311,7 @@ class project_task_history(osv.osv):
     _columns = {
         'task_id': fields.many2one('project.task', 'Task', ondelete='cascade', required=True, select=True),
         'type_id': fields.many2one('project.task.type', 'Stage'),
-        'kanban_state': fields.selection([('normal', 'Normal'), ('blocked', 'Blocked'), ('done', 'Ready for next stage')], 'Kanban State', required=False),
+        'kanban_state': fields.selection([('normal', 'Normal'), ('blocked', 'Blocked'), ('daily_activity', 'Daily Activity'),('done', 'Ready for next stage')], 'Kanban State', required=False),
         'date': fields.date('Date', select=True),
         'end_date': fields.function(_get_date, string='End Date', type="date", store={
             'project.task.history': (_get_related_date, None, 20)

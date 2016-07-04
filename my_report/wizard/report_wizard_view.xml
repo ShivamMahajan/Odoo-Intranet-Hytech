@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<openerp>
+   <data>
+   	
+   	
+    <record model="ir.ui.view" id="report_wizard">
+                <field name="name">My Report</field>
+                <field name="model">report.wizard</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                <form string="My Report">
+                	 <group>
+                		<field name="report_type"/>
+                	</group>
+                	      	<footer>
+                		<button icon='gtk-execute' string="Export" type="object" name="get_all_records"/>
+                    </footer>		 
+                </form>
+                </field>
+    </record>  
+
+       <record model="ir.actions.act_window" id="action_report_wizard_view">
+        <field name="name">My Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">report.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="report_wizard" />
+        <field name="target">new</field>
+    </record>
+
+<menuitem name="My Report" id="report_wizard_menu_id" parent="project.menu_project_management"
+              action="action_report_wizard_view" />
+		        
+    </data>
+</openerp>
